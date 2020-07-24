@@ -1,0 +1,19 @@
+{
+  "name": "messageboard-server",
+  "version": "1.0.0",
+  "description": "where messages can be viewed & posted",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "Jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/2006NodeDev/Runtime-Chic.git"
+  },
+  "author": "runtime-chic",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/2006NodeDev/Runtime-Chic/issues"
+  },
+  "homepage": "https://github.com/2006NodeDev/Runtime-Chic#readme"
+}
