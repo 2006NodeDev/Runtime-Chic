@@ -2,7 +2,7 @@ import express, { Request, Response, NextFunction } from 'express';
 import { Message } from '../models/message';
 // import { postMessage, getMessages } from '../dao/SQL/board-dao';
 import { getMessages, postMessage } from '../dao/SQL/fakeDao'
-import { publishMessage } from '../messaging';
+import { publishMessage } from '../messaging/index';
 
 export const boardRouter = express.Router();
 
