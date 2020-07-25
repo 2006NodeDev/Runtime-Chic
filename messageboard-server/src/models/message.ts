@@ -4,4 +4,5 @@ export class Message {
     title: string
     message: string
     date: string
+    email: string
 }

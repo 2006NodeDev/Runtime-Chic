@@ -2,10 +2,10 @@ let nodemailer = require('nodemailer');
 
 const transporter = nodemailer.createTransport({
     service: 'gmail',
-  auth: {
-    user: process.env['EMAIL'],
-    pass: process.env['PASSWORD']
-  }
+    auth: {
+        user: process.env['EMAIL'],
+        pass: process.env['PASSWORD']
+    }
 })
 
 const messageTemplate = {
@@ -21,8 +21,9 @@ const messageTemplate = {
  * @param {!Object} event Event payload.
  * @param {!Object} context Metadata for the event.
  */
-exports.newUserEmail = (event, context) => {
-    let newUser = JSON.parse(Buffer.from(event.data, 'base64').toString())
-    messageTemplate.to = newUser.email
+exports.messageEmail = (event, context) => {
+    let newMessage = JSON.parse(Buffer.from(event.data, 'base64').toString())
+    console.log(newMessage);
+    messageTemplate.to = newMessage.email
     transporter.sendMail(messageTemplate)
 };
