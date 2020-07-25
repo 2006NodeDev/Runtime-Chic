@@ -7,7 +7,7 @@ export function getMessages(){
 export function postMessage(newMessage:Message){
     console.log(`posting message: ${newMessage.title}`);
         messageArray.push(newMessage);
-        return messageArray
+        return newMessage
 }
 
 let messageArray = [];

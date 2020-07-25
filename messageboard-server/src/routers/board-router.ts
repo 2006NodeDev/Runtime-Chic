@@ -2,7 +2,7 @@ import express, { Request, Response, NextFunction } from 'express';
 import { Message } from '../models/message';
 // import { postMessage, getMessages } from '../dao/SQL/board-dao';
 import { getMessages, postMessage } from '../dao/SQL/fakeDao'
-import { expressEventEmitter, customExpressEvents } from '../event-listeners';
+import { publishMessage } from '../messaging';
 
 export const boardRouter = express.Router();
 
@@ -20,7 +20,7 @@ boardRouter.get('/', async (req:Request, res:Response, next:NextFunction)=>{
 //     "userId":3,
 //     "title":"new message from postman",
 //     "message": "This is a new message! Did i make it?",
-//     "email" : "runtime-sheek@google.com"
+//     "email" : "runtime.sheek@gmail.com"
 // }
 
 boardRouter.post('/',  async (req:Request, res:Response, next:NextFunction) => {
@@ -46,15 +46,16 @@ boardRouter.post('/',  async (req:Request, res:Response, next:NextFunction) => {
         console.log(`time: ${time}`);
         message.date = time;
 
-        // send email to user who created a new post
-        expressEventEmitter.emit(customExpressEvents.NEW_MESSAGE, message)
-
         // temp for testing
         let rand = Math.floor(Math.random()*10);
         message.messageId = rand;
 
-        let newMessage:Message[];
-        newMessage = await postMessage(message)
+        let newMessage:Message;
+        newMessage = postMessage(message)
+
+        // pub/sub
+        publishMessage(newMessage);
+
         res.json(newMessage)
 
     } catch (error) {
