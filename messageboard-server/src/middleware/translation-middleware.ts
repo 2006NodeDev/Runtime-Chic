@@ -11,11 +11,18 @@ const translate = new Translate();
 const target = 'hr';//{ code: 'hr', name: 'Croatian' }
 
 export async function getTextToTranslate(message:Message){
+
+    let newMessage = new Message()
+    newMessage.userId = message.userId;
+    newMessage.messageId = message.messageId;
+    newMessage.email = message.email;
+    newMessage.date = message.date;
+
     await translateText(message.title, 'title')
     await translateText(message.message, 'message')
-    console.log('title in top:', message.title);
-    console.log('message in top:', message.message);
-    postSerbianMessage(message);
+    console.log('title in top:', newMessage.title);
+    console.log('message in top:', newMessage.message);
+    postSerbianMessage(newMessage);
     
   async function translateText(text:string, type:string) {
     try {
@@ -27,9 +34,9 @@ export async function getTextToTranslate(message:Message){
         trans = trans + translation.toString()
       });
       (type === 'title')?
-      message.title = trans
+      newMessage.title = trans
       :
-      message.message = trans;
+      newMessage.message = trans;
       
     } catch (error) {
       console.log(error);
