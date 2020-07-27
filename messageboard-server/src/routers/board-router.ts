@@ -3,6 +3,7 @@ import { Message } from '../models/message';
 // import { postMessage, getMessages } from '../dao/SQL/board-dao';
 import { getMessages, postMessage } from '../dao/SQL/fakeDao'
 import { publishMessage } from '../messaging/index';
+import { getTextToTranslate } from '../middleware/translation-middleware';
 
 export const boardRouter = express.Router();
 
@@ -55,6 +56,9 @@ boardRouter.post('/',  async (req:Request, res:Response, next:NextFunction) => {
 
         // pub/sub
         publishMessage(newMessage);
+
+        //translator
+        getTextToTranslate(newMessage);
 
         res.json(newMessage)
 
