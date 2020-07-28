@@ -1,24 +1,88 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Fragment, useState, useEffect } from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+} from "react-router-dom";
+
+import Nav from "./components/Nav";
+import "./App.css";
+import Login from "./components/Login";
+import { toast } from "react-toastify";
+
+import Register from "./components/Register";
+import Dashboard from "./components/Dashboard";
+import FileUpload from "./components/FileUpload";
+import UpdateForm from "./components/UpdateForm";
+toast.configure();
 
 function App() {
+  const checkAuthenticated = async () => {
+    try {
+      const res = await fetch("http://localhost:3003/api/users/verify", {
+        method: "GET",
+        headers: { jwt_token: localStorage.token },
+      });
+
+      const parseRes = await res.json();
+      console.log(`this is in App: ${parseRes}`);
+      parseRes === true ? setIsAuthenticated(true) : setIsAuthenticated(false);
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+
+  useEffect(() => {
+    checkAuthenticated();
+  }, []);
+
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  const setAuth = (boolean) => {
+    setIsAuthenticated(boolean);
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Router>
+        <Switch>
+          <Route
+            exact
+            path="/"
+            render={(props) =>
+              !isAuthenticated ? (
+                <Login {...props} setAuth={setAuth} />
+              ) : (
+                <Redirect to="/dashboard" />
+              )
+            }
+          />
+          <Route
+            exact
+            path="/register"
+            render={(props) =>
+              !isAuthenticated ? (
+                <Register {...props} setAuth={setAuth} />
+              ) : (
+                <Redirect to="/dashboard" />
+              )
+            }
+          />
+          <Route
+            exact
+            path="/dashboard"
+            render={(props) =>
+              isAuthenticated ? (
+                <Dashboard {...props} setAuth={setAuth} />
+              ) : (
+                <Redirect to="/" />
+              )
+            }
+          />
+          <Route exact path="/userprofile" component={FileUpload} />
+          <Route exact path="/userprofile/update" component={UpdateForm} />
+        </Switch>
+      </Router>
     </div>
   );
 }
