@@ -6,6 +6,7 @@ const userRouter = require("./routes/users");
 const dashRouter = require("./routes/dashboard");
 const app = express();
 const uploadImage = require("./helpers/helper");
+const pool = require("./db");
 
 app.use(cors());
 
@@ -23,11 +24,21 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use("/api/users", userRouter);
 app.use("users/dashboard", dashRouter);
 
-app.post("/uploads", async (req, res, next) => {
+app.post("/uploads/:id", async (req, res, next) => {
   try {
+    let userId = parseInt(req.params.id);
+    console.log(userId);
+
     console.log(req.file);
     const myFile = req.file;
     const imageUrl = await uploadImage(myFile);
+
+    await pool.query(
+      `update harrypotter.users set "profile" = $1 
+                                  where "user_id" = $2;`,
+      [imageUrl, userId]
+    );
+
     res.status(200).json({
       message: "Upload was successful",
       data: imageUrl,
