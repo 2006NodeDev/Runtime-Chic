@@ -1,5 +1,6 @@
 
 import { Message } from "../models/message";
+import { logger } from "../util/loggers";
 
 const {PubSub} = require('@google-cloud/pubsub');
 // // $ npm install @google-cloud/pubsub
@@ -10,9 +11,8 @@ export const messageTopic = pubSubClient.topic(topicName);
 export async function publishMessage(message:Message){
     try {
         let messageId = await messageTopic.publishJSON(message)
-        console.log(`Message ${messageId} published.`);
-        console.log(`message poster's email: ${message.email}`);        
+        logger.debug(`Pub/Sub message ${messageId} published.`);        
     } catch (error) {
-        console.log(`publish message error ${error}`);
+        logger.error(`Pub/Sub message error ${error}`)
     }
 }

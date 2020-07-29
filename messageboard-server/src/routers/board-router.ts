@@ -4,6 +4,7 @@ import { Message } from '../models/message';
 import { getMessages, postMessage } from '../dao/fakeDao'
 import { publishMessage } from '../messaging/index';
 import { getTextToTranslate } from '../middleware/translation-middleware';
+import { logger } from '../util/loggers';
 
 export const boardRouter = express.Router();
 
@@ -45,7 +46,7 @@ boardRouter.post('/',  async (req:Request, res:Response, next:NextFunction) => {
         let month = newDate.getMonth();
         let year = newDate.getFullYear();
         let time = `${year}-${month}-${day} ${hour}:${minute}:${second}`
-        console.log(`time: ${time}`);
+        logger.debug(`time: ${time}`);
         message.date = time;
 
         // temp for testing
