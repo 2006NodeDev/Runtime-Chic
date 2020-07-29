@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import { TextField } from '@material-ui/core'
 import { Button } from '@material-ui/core'
-import { Message } from "../../models/Message";
-import '../../App.css'
+import { Message } from "../models/Messages";
 
 const useStyles = makeStyles((theme) => ({
     root:{
@@ -46,19 +45,22 @@ const PostMessage = (props) => {
         changeMessage(e.currentTarget.value)
     }
 
-    const updateTitle = (ey) => {
+    const updateTitle = (e) => {
         e.preventDefault()
         changeTitle(e.currentTarget.value)
     }
 
-    const submitMessage = async (e) => {
-        e.preventDefault()
-        let newMessage = {
-            userId: currentUser.userId,
-            message,
-            title,
-            email:currentUser.email,
-        }
+    const currentUser = props.user;
+//   let currentUser = useSelector((state)=>{
+//     return state.loginState.currentUser
+//   })
+
+    const submitMessage = async () => {
+        let newMessage = new Message()
+        newMessage.userId = currentUser.userId;
+        newMessage.message = message;
+        newMessage.title = title;
+        newMessage.email = currentUser.email;
         try{
             // await newMessageServer(newMessage)
         } catch (e) {
