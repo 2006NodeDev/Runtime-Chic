@@ -22,7 +22,7 @@ app.use(multerMid.single("file"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use("/api/users", userRouter);
-app.use("users/dashboard", dashRouter);
+app.use("/dashboard", dashRouter);
 
 app.post("/uploads/:id", async (req, res, next) => {
   try {

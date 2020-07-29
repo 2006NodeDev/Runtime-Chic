@@ -59,11 +59,13 @@ userRouter.post("/login", async (req, res, next) => {
       userPassword,
       user.rows[0].user_password
     );
-
+    console.log(`in the login`);
     if (!validPassword) {
       return res.status(401).json("Invalid Credential");
     }
+    console.log(`we have a valid password`);
     const jwtToken = jwtGenerator(user.rows[0].user_id);
+    console.log(`we got a token: ${jwtToken}`);
     return res.json({ jwtToken });
   } catch (err) {
     res.status(500).send("Server error");
