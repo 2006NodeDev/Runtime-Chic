@@ -1,5 +1,6 @@
 import { Message } from "../models/message";
 import { postSerbianMessage } from "../dao/fakeDao";
+import { logger } from "../util/loggers";
 
 // Imports the Google Cloud client library
 const {Translate} = require('@google-cloud/translate').v2;
@@ -20,8 +21,8 @@ export async function getTextToTranslate(message:Message){
 
     await translateText(message.title, 'title')
     await translateText(message.message, 'message')
-    console.log('title in top:', newMessage.title);
-    console.log('message in top:', newMessage.message);
+    logger.debug('title in top:', newMessage.title);
+    logger.debug('message in top:', newMessage.message);
     postSerbianMessage(newMessage);
     
   async function translateText(text:string, type:string) {
@@ -30,7 +31,7 @@ export async function getTextToTranslate(message:Message){
       translations = Array.isArray(translations) ? translations : [translations];
       let trans = ''
       translations.forEach((translation:any) => {
-        console.log(`${text} => ${translation}`);
+        logger.debug(`${text} => ${translation}`);
         trans = trans + translation.toString()
       });
       (type === 'title')?
@@ -39,7 +40,7 @@ export async function getTextToTranslate(message:Message){
       newMessage.message = trans;
       
     } catch (error) {
-      console.log(error);
+      logger.error(error);
     }
   }
 }
