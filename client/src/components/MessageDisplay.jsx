@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
@@ -12,13 +12,15 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { useSelector } from 'react-redux';
+import { gryffindorStyle } from '../components/gryffindorStyle'
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    maxWidth: 600,
-    backgroundColor: '#ebf7fa',
-    color: '#0b3f32',
-  },
+//   title:{
+//     backgroundColor: 'white',
+//   },
+//   message:{
+//     backgroundColor: 'white',
+//   },
   expand: {
     transform: 'rotate(0deg)',
     marginLeft: 'auto',
@@ -29,13 +31,45 @@ const useStyles = makeStyles((theme) => ({
   expandOpen: {
     transform: 'rotate(180deg)',
   },
-  avatar: {
-    backgroundColor: '#106944',
+  subject: {
+    direction : 'flex',
+    flexDirection : 'row',
   },
+//   avatar: {
+//     backgroundColor: '#106944',
+//   },
+//   root: {
+//     maxWidth: 600,
+//     backgroundColor: '#ebf7fa',
+//     color: '#0b3f32',
+//   },
 }));
 
-export const UserDisplay = (props)=>{
-  const classes = useStyles();
+
+export const MessageDisplay = (props)=>{
+  let classes = useStyles();
+  // let classes = gryffindorStyle();
+  // let character = gryffindorStyle();
+  let character = gryffindorStyle();
+  switch(props.user.house){
+    case 1:
+      character = gryffindorStyle();
+      console.log(`case: ${props.user.house}`)
+      break;
+  //   // case 2:
+  //   //   classes = Slytherin();
+  //   //   break;
+  //   // case 3:
+  //   //   classes = Ravenclaw();
+  //   //   break;
+  //   // case 4:
+  //   //   classes = Hufflepuff();
+  //   //   break;
+    default:
+      // classes = classes;
+      
+  }
+
   const [expanded, setExpanded] = React.useState(false);
 
 //   let currentUser = useSelector((state)=>{
@@ -48,16 +82,22 @@ export const UserDisplay = (props)=>{
   
   return (
     <div className='display'>
-      <Card className={classes.root}> 
+      <Card className={character.root}> 
         <CardHeader
           avatar={
-            <Avatar aria-label="recipe" className={classes.avatar}>
-              {props.user.house.charAt(0).toUpperCase()}
+            <Avatar aria-label="recipe" className={character.avatar}>
+              {/* {props.user.house.charAt(0).toUpperCase()} */}
             </Avatar>
           }
-          title={`${props.message.title}`}
-          subheader={props.message.date}
+          title={`${props.user.username}`}
+          subheader={`${props.message.date}`}
         />
+        <CardContent className={classes.subject}>
+          <Typography className={character.subject}>Subject:</Typography>
+          <Typography className={character.title} variant="body1" color="textSecondary" component="p">
+            {props.message.title}
+          </Typography>
+        </CardContent>
         <CardActions disableSpacing>
           <IconButton
             className={clsx(classes.expand, {
@@ -72,8 +112,8 @@ export const UserDisplay = (props)=>{
         </CardActions>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
-            <Typography paragraph>Message:</Typography>
-            <Typography paragraph>
+            {/* <Typography className={classes.title} paragraph>{props.message.title}</Typography> */}
+            <Typography className={character.message} paragraph>
               {props.message.message}
             </Typography>
           </CardContent>
@@ -82,3 +122,5 @@ export const UserDisplay = (props)=>{
     </div>
   )
 }
+
+export default MessageDisplay;
