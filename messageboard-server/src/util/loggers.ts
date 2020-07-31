@@ -13,3 +13,8 @@ configure({
 
 export const logger = getLogger()
 export const errorLogger = getLogger('error')
+
+//logger.info()
+//logger.debug()
+//logger.error()
+//logger.fatal()
