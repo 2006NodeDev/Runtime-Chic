@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
+import { logger } from "../util/loggers";
 
 export function loggingMiddleWare(req:Request, res:Response, next:NextFunction){
-    console.log(`${req.method} Request from ${req.ip} to ${req.path}`);
+    logger.debug(`${req.method} Request from ${req.ip} to ${req.path}`)
     next() 
 }

@@ -10,7 +10,7 @@ dashRouter.post("/", auth, async (req, res) => {
       "SELECT u.first_name, u.house, u.profile, h.house_id, h.house_name FROM harrypotter.users u left join harrypotter.house h on u.house = h.house_id   WHERE u.user_id = $1",
       [req.user]
     );
-
+    console.log(user.rows);
     res.json(user.rows[0]);
   } catch (err) {
     console.error(err.message);
