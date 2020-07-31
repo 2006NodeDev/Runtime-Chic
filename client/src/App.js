@@ -38,6 +38,7 @@ function App() {
   }, []);
 
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [currentUser, setCurrentUser] = useState([]);
 
   const setAuth = (boolean) => {
     setIsAuthenticated(boolean);
@@ -51,9 +52,13 @@ function App() {
             path="/"
             render={(props) =>
               !isAuthenticated ? (
-                <Login {...props} setAuth={setAuth} />
+                <Login
+                  {...props}
+                  setCurrentUser={setCurrentUser}
+                  setAuth={setAuth}
+                />
               ) : (
-                <Redirect to="/dashboard" />
+                <Redirect to="/dashboard" currentUser={currentUser} />
               )
             }
           />
@@ -62,9 +67,13 @@ function App() {
             path="/register"
             render={(props) =>
               !isAuthenticated ? (
-                <Register {...props} setAuth={setAuth} />
+                <Register
+                  {...props}
+                  setCurrentUser={setCurrentUser}
+                  setAuth={setAuth}
+                />
               ) : (
-                <Redirect to="/dashboard" />
+                <Redirect to="/dashboard" currentUser={currentUser} />
               )
             }
           />
@@ -73,14 +82,28 @@ function App() {
             path="/dashboard"
             render={(props) =>
               isAuthenticated ? (
-                <Dashboard {...props} setAuth={setAuth} />
+                <Dashboard
+                  {...props}
+                  currentUser={currentUser}
+                  setAuth={setAuth}
+                />
               ) : (
                 <Redirect to="/" />
               )
             }
           />
-          <Route exact path="/userprofile" component={FileUpload} />
-          <Route exact path="/userprofile/update" component={UpdateForm} />
+          <Route
+            exact
+            path="/userprofile"
+            currentUser={currentUser}
+            component={FileUpload}
+          />
+          <Route
+            exact
+            path="/userprofile/update"
+            currentUser={currentUser}
+            component={UpdateForm}
+          />
         </Switch>
       </Router>
     </div>

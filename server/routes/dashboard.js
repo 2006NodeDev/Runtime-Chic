@@ -3,6 +3,7 @@ const auth = require("../middleware/auth");
 const pool = require("../db");
 const axios = require("axios");
 const bcrypt = require("bcrypt");
+const { listenForMessages } = require("../service/Gcp/user-notification");
 
 dashRouter.post("/", auth, async (req, res) => {
   try {
@@ -23,21 +24,23 @@ dashRouter.post("/", auth, async (req, res) => {
 //     console.log(res);
 //   });
 // });
-dashRouter.patch("/update", async (req, res, next) => {
+dashRouter.get("/notifications", async (req, res, next) => {
   try {
-    let {
-      userId,
-      userEmail,
-      userPassword,
-      firstName,
-      lastName,
-      profile,
-    } = req.body;
+    let response = await listenForMessages;
+    res.send(`this is the response: ${response}`);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+dashRouter.patch("/update/:id", async (req, res, next) => {
+  try {
+    let userId = parseInt(req.params.id);
+    let { userEmail, userPassword, firstName, lastName, profile } = req.body;
     const salt = await bcrypt.genSalt(10);
     const bcryptPassword = await bcrypt.hash(userPassword, salt);
 
     const updateUser = {
-      userId: req.body.userId || undefined,
       userEmail: req.body.userEmail || undefined,
       userPassword: req.body.userPassword || undefined,
       firstName: req.body.firstName || undefined,

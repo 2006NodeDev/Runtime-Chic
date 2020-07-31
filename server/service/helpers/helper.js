@@ -1,5 +1,5 @@
 const util = require("util");
-const gc = require("../config/index");
+const gc = require("../Gcp/index");
 const bucket = gc.bucket("revature-project-1"); // should be your bucket name
 
 /**
