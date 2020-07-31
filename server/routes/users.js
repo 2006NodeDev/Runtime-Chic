@@ -79,4 +79,25 @@ userRouter.get("/verify", auth, (req, res, next) => {
   }
 });
 
+userRouter.get("/:id", async (req, res, next) =>{
+  let { id } = req.params;
+  if(isNaN(+id)){
+    res.status(400).send('Id should be a #')
+  } else{
+    try {
+      const user = await pool.query(
+        `select u.user_id, u.user_email from harrypotter.users u where u.user_id = ${id};`
+      );
+      return user.rows[0].user_email;
+    } catch (error) {
+      console.log('Error getting User by Id')
+      res.status(500).send("Server error");
+    }
+  }
+});
+
+// userRouter.get("/allUsers", auth, (req, res, next) =>{
+
+// });
+
 module.exports = userRouter;
