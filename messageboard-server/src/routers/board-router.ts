@@ -56,9 +56,13 @@ boardRouter.post('/',  async (req:Request, res:Response, next:NextFunction) => {
         let newMessage:Message;
         newMessage = await postMessage(message)
 
+<<<<<<< HEAD
         let email = await userService(newMessage.userId)
         logger.debug(`email from userService: ${email}`)
         newMessage.email = email;
+=======
+        newMessage.email = req.body.email;
+>>>>>>> 4fcf2ae14e013d8e14354c66c68c286850a376bd
         
         // // pub/sub
         publishMessage(newMessage);

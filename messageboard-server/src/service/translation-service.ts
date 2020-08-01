@@ -1,5 +1,5 @@
 import { Message } from "../models/message";
-import { postSerbianMessage } from "../dao/fakeDao";
+// import { postSerbianMessage } from "../dao/board-dao";
 import { logger } from "../util/loggers";
 
 // Imports the Google Cloud client library
@@ -11,7 +11,7 @@ const translate = new Translate();
 // set langauge to translate to
 const target = 'hr';//{ code: 'hr', name: 'Croatian' }
 
-export async function getTextToTranslate(message:Message){
+export async function getTextToTranslate(message:Message):Promise<Message>{
 
     let newMessage = new Message()
     newMessage.userId = message.userId;
@@ -21,11 +21,9 @@ export async function getTextToTranslate(message:Message){
 
     await translateText(message.title, 'title')
     await translateText(message.message, 'message')
-    logger.debug('title in top:', newMessage.title);
-    logger.debug('message in top:', newMessage.message);
-    postSerbianMessage(newMessage);
+    return newMessage
     
-  async function translateText(text:string, type:string) {
+  async function translateText(text:string, type:string){
     try {
       let [translations] = await translate.translate(text, target);
       translations = Array.isArray(translations) ? translations : [translations];
