@@ -4,6 +4,7 @@ import { corsFilter } from './middleware/cors-filter';
 import { boardRouter } from './routers/board-router';
 import { JWTVerifyMiddleware } from './middleware/jwt-verified-middleware';
 import { serbianRouter } from './routers/serbian-router';
+import { logger, errorLogger } from './util/loggers';
 
 const app = express();
 
@@ -23,4 +24,12 @@ app.get('/health', (req:Request, res:Response)=>{
     res.sendStatus(200);
 })
 
-app.listen(2007, ()=> console.log('MessageBoard Server started...'));
+app.listen(2007, ()=> {
+    logger.info(`MessagBoard server has started`) 
+});
+
+process.on('uncaughtException', err => {
+    logger.fatal(`Uncaught Exception: ${err.message} ${err.stack}`)
+    errorLogger.fatal(`Uncaught Exception: ${err.message} ${err.stack}`)
+    process.exit(1)
+})

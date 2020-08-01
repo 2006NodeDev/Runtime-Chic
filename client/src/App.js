@@ -15,6 +15,9 @@ import Register from "./components/Register";
 import Dashboard from "./components/Dashboard";
 import FileUpload from "./components/FileUpload";
 import UpdateForm from "./components/UpdateForm";
+import MessageBoard from "./components/MessageBoard";
+import PostMessageBoard from "./components/PostMessageBoard";
+
 toast.configure();
 
 function App() {
@@ -92,18 +95,10 @@ function App() {
               )
             }
           />
-          <Route
-            exact
-            path="/userprofile"
-            currentUser={currentUser}
-            component={FileUpload}
-          />
-          <Route
-            exact
-            path="/userprofile/update"
-            currentUser={currentUser}
-            component={UpdateForm}
-          />
+          <Route exact path="/userprofile" currentUser={currentUser} component={FileUpload} />
+          <Route exact path="/userprofile/update" currentUser={currentUser} component={UpdateForm} />
+          <Route exact path="/messageboard" component={MessageBoard} />
+          <Route exact path="/messageboard/post" component={PostMessageBoard} />
         </Switch>
       </Router>
     </div>
