@@ -1,10 +1,10 @@
 import express, { Request, Response, NextFunction } from 'express';
 import { Message } from '../models/message';
-// import { postMessage, getMessages } from '../dao/SQL/board-dao';
-import { getMessages, postMessage } from '../dao/fakeDao'
+import { getMessages, postSerbianMessage, postMessage } from '../dao/board-dao';
 import { publishMessage } from '../messaging/index';
-import { getTextToTranslate } from '../middleware/translation-middleware';
+import { getTextToTranslate } from '../service/translation-service';
 import { logger } from '../util/loggers';
+import { userService } from '../remote/user-service/user-service';
 
 export const boardRouter = express.Router();
 
@@ -38,32 +38,39 @@ boardRouter.post('/',  async (req:Request, res:Response, next:NextFunction) => {
         message.email = req.body.email
 
         //Auto-set date
-        let newDate = new Date();
-        let second = newDate.getSeconds();
-        let minute = newDate.getMinutes();
-        let hour = newDate.getHours();
-        let day = newDate.getDay();
-        let month = newDate.getMonth();
-        let year = newDate.getFullYear();
-        let time = `${year}-${month}-${day} ${hour}:${minute}:${second}`
-        logger.debug(`time: ${time}`);
-        message.date = time;
+        // let newDate = new Date();
+        // let second = newDate.getSeconds();
+        // let minute = newDate.getMinutes();
+        // let hour = newDate.getHours();
+        // let day = newDate.getDay();
+        // let month = newDate.getMonth();
+        // let year = newDate.getFullYear();
+        // let time = `${year}-${month}-${day} ${hour}:${minute}:${second}`
+        // logger.debug(`time: ${time}`);
+        // message.date = time;
 
         // temp for testing
         let rand = Math.floor(Math.random()*10);
         message.messageId = rand;
 
         let newMessage:Message;
-        newMessage = postMessage(message)
+        newMessage = await postMessage(message)
 
-        // pub/sub
+        let email = await userService(newMessage.userId)
+        logger.debug(`email from userService: ${email}`)
+        newMessage.email = email;
+        
+        // // pub/sub
         publishMessage(newMessage);
 
-        // return message as result
+        // // return message as result
         res.json(newMessage)
 
         //translator
-        getTextToTranslate(newMessage);
+        let translated:Message = await getTextToTranslate(newMessage);
+        logger.debug(`returned translated message id: ${translated.messageId}`)
+
+        await postSerbianMessage(translated);
 
     } catch (error) {
         next(error);
