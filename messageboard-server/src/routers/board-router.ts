@@ -1,12 +1,15 @@
 import express, { Request, Response, NextFunction } from 'express';
 import { Message } from '../models/message';
-import { getMessages, postSerbianMessage, postMessage } from '../dao/board-dao';
+import { getMessages, postSerbianMessage, postMessage } from '../dao/board-dao'; 
 import { publishMessage } from '../messaging/index';
 import { getTextToTranslate } from '../service/translation-service';
 import { logger } from '../util/loggers';
 import { userService } from '../remote/user-service/user-service';
+import { auth } from '../middleware/authentication-middleware'
 
 export const boardRouter = express.Router();
+
+boardRouter.use(auth);
 
 boardRouter.get('/', async (req:Request, res:Response, next:NextFunction)=>{
     try {
@@ -26,7 +29,7 @@ boardRouter.get('/', async (req:Request, res:Response, next:NextFunction)=>{
 //     "email" : "runtime.sheek@gmail.com"
 // }
 
-boardRouter.post('/',  async (req:Request, res:Response, next:NextFunction) => {
+boardRouter.post('/',  auth, async (req:Request, res:Response, next:NextFunction) => {
     try {
         let message = new Message();
         
@@ -37,18 +40,6 @@ boardRouter.post('/',  async (req:Request, res:Response, next:NextFunction) => {
         //User data from react post
         message.email = req.body.email
 
-        //Auto-set date
-        // let newDate = new Date();
-        // let second = newDate.getSeconds();
-        // let minute = newDate.getMinutes();
-        // let hour = newDate.getHours();
-        // let day = newDate.getDay();
-        // let month = newDate.getMonth();
-        // let year = newDate.getFullYear();
-        // let time = `${year}-${month}-${day} ${hour}:${minute}:${second}`
-        // logger.debug(`time: ${time}`);
-        // message.date = time;
-
         // temp for testing
         let rand = Math.floor(Math.random()*10);
         message.messageId = rand;
@@ -56,13 +47,9 @@ boardRouter.post('/',  async (req:Request, res:Response, next:NextFunction) => {
         let newMessage:Message;
         newMessage = await postMessage(message)
 
-<<<<<<< HEAD
-        let email = await userService(newMessage.userId)
+        let email = await userService(newMessage.userId, req.headers.authorization)
         logger.debug(`email from userService: ${email}`)
         newMessage.email = email;
-=======
-        newMessage.email = req.body.email;
->>>>>>> 4fcf2ae14e013d8e14354c66c68c286850a376bd
         
         // // pub/sub
         publishMessage(newMessage);
@@ -70,8 +57,8 @@ boardRouter.post('/',  async (req:Request, res:Response, next:NextFunction) => {
         // // return message as result
         res.json(newMessage)
 
-        //translator
-        let translated:Message = await getTextToTranslate(newMessage);
+        // translator
+        let translated:any = await getTextToTranslate(newMessage);
         logger.debug(`returned translated message id: ${translated.messageId}`)
 
         await postSerbianMessage(translated);

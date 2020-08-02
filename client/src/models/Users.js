@@ -1,5 +1,10 @@
 export class User {
     userId
-    username
+    userEmail
+    firstName
+    lastName
+    houseId
     house
+    profile
+    numMessages
 }
