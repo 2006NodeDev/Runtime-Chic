@@ -54,7 +54,6 @@ userRouter.post("/login", async (req, res, next) => {
     if (user.rows.length === 0) {
       return res.status(401).json("Invalid Credential");
     }
-
     const validPassword = await bcrypt.compare(
       userPassword,
       user.rows[0].user_password
@@ -78,6 +77,42 @@ userRouter.get("/verify", auth, (req, res, next) => {
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server error");
+  }
+});
+
+userRouter.get("/:id", async (req, res, next) =>{
+  let { id } = req.params;
+  if(isNaN(+id)){
+    res.status(400).send('Id should be a #')
+  } else{
+    try {
+      console.log(`user_id: ${id}`)
+      let user = await pool.query(
+        `select * from harrypotter.users u where u.user_id = ${id};` // 
+      );
+      console.log(`user: ${user.rows[0].user_email}`)
+      res.json(user.rows[0].user_email);
+    } catch (error) {
+      console.log('Error getting User by Id')
+      res.status(500).send("Server error");
+    }
+  }
+});
+
+userRouter.get("/get/allUsers", auth, async (req, res, next) =>{
+  try {
+    const users = await pool.query(
+      `select u.user_id, u.user_email, u.user_password, u.first_name, u.last_name, u.house, u.profile, h.house_id, h.house_name from harrypotter.users u
+      join harrypotter.house h on u.house = h.house_id;`
+    );
+    if (users.rows.length === 0){
+      console.log(`users.rows.length === 0`)
+    }
+    res.json(users.rows);
+    
+  } catch (error) {
+    console.log('Error getting User by Id')
+    res.status(500).send("Server error");    
   }
 });
 

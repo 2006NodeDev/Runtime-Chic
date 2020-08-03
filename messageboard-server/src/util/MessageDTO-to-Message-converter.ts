@@ -8,6 +8,6 @@ export function MessageDTOtoMessageConverter(dto:MessageDTO):Message{
         title: dto.title,
         message: dto.message,
         date: dto.date.toString(),
-        email:'',
+        email: '',
     }
 }
