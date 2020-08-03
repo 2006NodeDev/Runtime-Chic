@@ -54,14 +54,14 @@ userRouter.post("/login", async (req, res, next) => {
     if (user.rows.length === 0) {
       return res.status(401).json("Invalid Credential");
     }
-    // const validPassword = await bcrypt.compare(
-    //   userPassword,
-    //   user.rows[0].user_password
-    // );
-    // console.log(`in the login`);
-    // if (!validPassword) {
-    //   return res.status(401).json("Invalid Credential");
-    // }
+    const validPassword = await bcrypt.compare(
+      userPassword,
+      user.rows[0].user_password
+    );
+    console.log(`in the login`);
+    if (!validPassword) {
+      return res.status(401).json("Invalid Credential");
+    }
     console.log(`we have a valid password`);
     const jwtToken = jwtGenerator(user.rows[0].user_id);
     console.log(`we got a token: ${jwtToken}`);
