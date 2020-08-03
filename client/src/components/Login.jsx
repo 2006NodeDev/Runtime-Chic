@@ -4,7 +4,7 @@ import { Link, Redirect } from "react-router-dom";
 import { toast } from "react-toastify";
 toast.configure();
 
-const Login = ({ setAuth }) => {
+const Login = ({ setCurrentUser, setAuth }) => {
   const [inputs, setInputs] = useState({
     userEmail: "",
     userPassword: "",
@@ -28,6 +28,8 @@ const Login = ({ setAuth }) => {
       });
 
       const parseRes = await response.json();
+
+      setCurrentUser(parseRes);
 
       if (parseRes.jwtToken) {
         localStorage.setItem("token", parseRes.jwtToken);
