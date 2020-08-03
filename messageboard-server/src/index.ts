@@ -25,7 +25,7 @@ app.get('/health', (req:Request, res:Response)=>{
 })
 
 app.listen(2007, ()=> {
-    logger.info(`MessagBoard server has started`) 
+    logger.info(`MessageBoard server has started`) 
 });
 
 process.on('uncaughtException', err => {

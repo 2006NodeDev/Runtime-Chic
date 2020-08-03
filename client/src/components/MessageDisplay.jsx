@@ -11,7 +11,7 @@ import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { useSelector } from 'react-redux';
+//import { useSelector } from 'react-redux';
 import { gryffindorStyle } from '../components/gryffindorStyle'
 
 const useStyles = makeStyles((theme) => ({
