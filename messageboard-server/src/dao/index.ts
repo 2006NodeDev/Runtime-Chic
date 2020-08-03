@@ -8,3 +8,5 @@ export const connectionPool:Pool = new Pool({
     port:5432, // standard db port
     max:5 // max # connections
 })
+
+

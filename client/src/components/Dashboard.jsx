@@ -6,7 +6,7 @@ import ravenclaw from "../images/ravenclaw.png";
 import hufflepuff from "../images/hufflepuff.png";
 import FileUpload from "./FileUpload";
 import Nav from "./Nav";
-const Dashboard = ({ setAuth }) => {
+const Dashboard = ({ currentUser, setAuth }) => {
   const [name, setName] = useState("");
   const [houseImg, sethouseImg] = useState([]);
   const [profileImg, setProfileImg] = useState("");
@@ -18,13 +18,16 @@ const Dashboard = ({ setAuth }) => {
         method: "POST",
         headers: { jwt_token: localStorage.token },
       });
-
+      console.log(currentUser);
+      console.log(`this is currentUser:${currentUser.house}`);
+      console.log(name);
       const parseData = await res.json();
+      console.log(parseData);
       setName(parseData.first_name);
       sethouseImg(parseData.house_name);
       setProfileImg(parseData.profile);
-      console.log("FRIENDS");
-      console.log(parseData);
+      // console.log("FRIENDS");
+      // console.log(parseData);
     } catch (err) {
       console.error(err.message);
     }
@@ -57,6 +60,8 @@ const Dashboard = ({ setAuth }) => {
   useEffect(() => {
     getProfile();
   }, []);
+  console.log(`this is currentUser:${currentUser}`);
+  console.log(name);
 
   return (
     <div id="dashMainDiv">

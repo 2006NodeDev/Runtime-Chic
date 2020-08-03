@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import FileUpload from "./FileUpload";
 
-const Register = ({ setAuth }) => {
+const Register = ({ setCurrentUser, setAuth }) => {
   const [inputs, setInputs] = useState({
     userEmail: "",
     userPassword: "",
@@ -29,7 +29,7 @@ const Register = ({ setAuth }) => {
         body: JSON.stringify(body),
       });
       const parseRes = await response.json();
-
+      setCurrentUser(parseRes);
       if (parseRes.jwtToken) {
         localStorage.setItem("token", parseRes.jwtToken);
         setAuth(true);

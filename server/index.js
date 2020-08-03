@@ -5,7 +5,7 @@ const cors = require("cors");
 const userRouter = require("./routes/users");
 const dashRouter = require("./routes/dashboard");
 const app = express();
-const uploadImage = require("./helpers/helper");
+const uploadImage = require("./service/helpers/helper");
 const pool = require("./db");
 
 app.use(cors());
