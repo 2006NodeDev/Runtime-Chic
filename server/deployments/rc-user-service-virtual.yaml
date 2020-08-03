@@ -1,0 +1,19 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: rc-user-service-virtual
+  namespace: runtime-chick
+spec:
+  gateways:
+  - rc-gateway
+  hosts:
+  - "*" # interpreted as reviews.foo.svc.cluster.local
+  http:
+  - match:
+    - uri:
+        prefix: /user-service
+    route:
+    - destination:
+        port:
+          number: 3003
+        host: rc-user-service-service # interpreted as reviews.foo.svc.cluster.local

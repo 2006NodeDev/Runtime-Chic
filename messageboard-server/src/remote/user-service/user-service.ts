@@ -2,15 +2,18 @@ import { logger } from "../../util/loggers";
 import { userServiceBaseClient } from '.';
 import { User } from "../../models/user";
 
+
 export const userService = async (userId:number, token:string) => {
     try{
-        let user = await userServiceBaseClient.get(`/users/${userId}`, {
+        let result = await userServiceBaseClient.get(`/api/users/${userId}`, {
             headers:{
-                'Authorization': token
+                'jwt_token': token
             }
         })
-        return user
+        logger.debug(`userService result ${result.data}`);
+        return result.data
     }catch(error){
+        logger.error('error from user-service.')
         logger.error(error);
         let defaultUser = new User()
         defaultUser.userId = userId

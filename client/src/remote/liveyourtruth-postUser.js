@@ -1,8 +1,8 @@
 import { liveyourtruthClient } from "."
 
-export const postMessage = async (message) =>{
+export const postUser = async (user) =>{
     try {
-        let response = await liveyourtruthClient.post('/board', message)
+        let response = await liveyourtruthClient.post('/api/users/register', user)
         console.log(response);
         return response.data
     } catch (error) {
