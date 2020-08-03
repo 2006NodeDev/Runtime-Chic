@@ -11,5 +11,5 @@ exports.helloPubSub = (event, context) => {
   const message = event.data
     ? Buffer.from(event.data, "base64").toString()
     : `this is the ${messageCount} time`;
-  console.log(message);
+  // console.log(message);
 };
