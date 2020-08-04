@@ -8,7 +8,7 @@ export const service = axios.create({
     baseURL: mbBaseUrl,
     headers:{
         'Content-Type':'application/json'
-    }
+    },
 })
 
 export const liveyourtruthClient = axios.create({

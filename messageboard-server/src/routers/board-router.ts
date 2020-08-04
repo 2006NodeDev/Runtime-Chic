@@ -36,7 +36,7 @@ boardRouter.post('/',  async (req:Request, res:Response, next:NextFunction) => {
         message.message = req.body.message
 
         //User data from react post
-        message.email = req.body.email
+        // message.email = req.body.email
 
         let newMessage:Message;
         newMessage = await postMessage(message)
