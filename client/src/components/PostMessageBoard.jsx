@@ -28,7 +28,7 @@ const PostMessage = (props) => {
     const submitMessage = async () => {
         console.log(`submitting a message from ${currentUser.userId}`)
         let newMessage = new Message()
-        newMessage.userId = 1;
+        // newMessage.userId = currentUser.userId;
         newMessage.message = message;
         newMessage.title = title;
         try{
@@ -37,8 +37,6 @@ const PostMessage = (props) => {
         } catch (e) {
             console.log(`Error from PostMessage ${e}`)
         }
-
-        props.history.push(`/`)
     }
 
     return(

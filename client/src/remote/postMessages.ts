@@ -1,4 +1,4 @@
-import { service } from "."
+import { service } from "./index"
 import { Message } from "../models/Messages";
 
 export const postMessage = async (message:Message) =>{
