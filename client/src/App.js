@@ -10,13 +10,15 @@ import Nav from "./components/Nav";
 import "./App.css";
 import Login from "./components/Login";
 import { toast } from "react-toastify";
-
+import { Provider } from 'react-redux';
 import Register from "./components/Register";
 import Dashboard from "./components/Dashboard";
 import FileUpload from "./components/FileUpload";
 import UpdateForm from "./components/UpdateForm";
 import MessageBoard from "./components/MessageBoard";
 import PostMessageBoard from "./components/PostMessageBoard";
+import { store } from './store';
+import SerbianMessageBoard from "./components/SerbianMessageBoard";
 
 toast.configure();
 
@@ -48,59 +50,62 @@ function App() {
   };
   return (
     <div>
-      <Router>
-        <Switch>
-          <Route
-            exact
-            path="/"
-            render={(props) =>
-              !isAuthenticated ? (
-                <Login
-                  {...props}
-                  setCurrentUser={setCurrentUser}
-                  setAuth={setAuth}
-                />
-              ) : (
-                <Redirect to="/dashboard" currentUser={currentUser} />
-              )
-            }
-          />
-          <Route
-            exact
-            path="/register"
-            render={(props) =>
-              !isAuthenticated ? (
-                <Register
-                  {...props}
-                  setCurrentUser={setCurrentUser}
-                  setAuth={setAuth}
-                />
-              ) : (
-                <Redirect to="/dashboard" currentUser={currentUser} />
-              )
-            }
-          />
-          <Route
-            exact
-            path="/dashboard"
-            render={(props) =>
-              isAuthenticated ? (
-                <Dashboard
-                  {...props}
-                  currentUser={currentUser}
-                  setAuth={setAuth}
-                />
-              ) : (
-                <Redirect to="/" />
-              )
-            }
-          />
-          <Route exact path="/userprofile" currentUser={currentUser} component={FileUpload} />
-          <Route exact path="/userprofile/update" currentUser={currentUser} component={UpdateForm} />
-          <Route exact path="/messageboard" component={MessageBoard} />
-          <Route exact path="/messageboard/post" component={PostMessageBoard} />
-        </Switch>
-      </Router>
+      <Provider store={store}>
+        <Router>
+          <Switch>
+            <Route
+              exact
+              path="/"
+              render={(props) =>
+                !isAuthenticated ? (
+                  <Login
+                    {...props}
+                    setCurrentUser={setCurrentUser}
+                    setAuth={setAuth}
+                  />
+                ) : (
+                  <Redirect to="/dashboard" currentUser={currentUser} />
+                )
+              }
+            />
+            <Route
+              exact
+              path="/register"
+              render={(props) =>
+                !isAuthenticated ? (
+                  <Register
+                    {...props}
+                    setCurrentUser={setCurrentUser}
+                    setAuth={setAuth}
+                  />
+                ) : (
+                  <Redirect to="/dashboard" currentUser={currentUser} />
+                )
+              }
+            />
+            <Route
+              exact
+              path="/dashboard"
+              render={(props) =>
+                isAuthenticated ? (
+                  <Dashboard
+                    {...props}
+                    currentUser={currentUser}
+                    setAuth={setAuth}
+                  />
+                ) : (
+                  <Redirect to="/" />
+                )
+              }
+            />
+            <Route exact path="/userprofile" currentUser={currentUser} component={FileUpload} />
+            <Route exact path="/userprofile/update" currentUser={currentUser} component={UpdateForm} />
+            <Route exact path="/messageboard" component={MessageBoard} />
+            <Route exact path="/messageboard/translate" component={SerbianMessageBoard} />
+            <Route exact path="/messageboard/post" component={PostMessageBoard} />
+          </Switch>
+        </Router>
+      </Provider>
     </div>
   );
 }

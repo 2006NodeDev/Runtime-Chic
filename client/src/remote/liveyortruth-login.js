@@ -1,16 +1,25 @@
 import { liveyourtruthClient } from ".";
-import { Users } from "../models/Users";
 
-export const liveyourtruthLogin = async (username, password) => {
-  let credentials = {
-    username,
-    password,
-  };
+export const liveyourtruthLogin = async (body) => {
   try {
-    let response = await liveyourtruthClient.post("/login", credentials);
-    console.log(response);
+      const response = await fetch("http://localhost:3003/api/users/login", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(body),
+      });
+    const parseRes = await response.json();
+    console.log(`response from login remote${parseRes.userEmail}`);
+    if (parseRes.jwtToken) {
+      localStorage.setItem("token", parseRes.jwtToken);
+      console.log("Logged in Successfully");
+    } else {
+      console.log(parseRes);
+    }
     return response.data; //should be the user object
   } catch (e) {
+    console.log(`post login didn't work :(`)
     console.log(e);
     //should probably do something is we get an error
   }

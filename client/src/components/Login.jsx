@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from "react";
 import { Link, Redirect } from "react-router-dom";
+import { baseUrl } from "../environment/environment"
 
 import { toast } from "react-toastify";
 toast.configure();
@@ -19,7 +20,8 @@ const Login = ({ setCurrentUser, setAuth }) => {
     e.preventDefault();
     try {
       const body = { userEmail, userPassword };
-      const response = await fetch("http://localhost:3003/api/users/login", {
+      // const response = await fetch(`${baseUrl}/api/users/login`, {
+      const response = await fetch(`http://localhost:3003/api/users/login`, {
         method: "POST",
         headers: {
           "Content-type": "application/json",

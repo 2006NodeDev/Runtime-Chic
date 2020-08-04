@@ -8,6 +8,7 @@ export const postMessageTypes = {
     BAD_CREDENTIALS: 'P2_POST_MESSAGE_BAD_CREDENTIALS',
 }
 export const postMessageActionMapper = (newMessage:Message) => async (dispatch:any) => {
+    console.log(`post message action mapper`)
     try {
         let message = await postMessage(newMessage)
         dispatch({

@@ -7,7 +7,7 @@ export const serbianMessageTypes = {
     INTERNAL_SERVER: 'P2_INTERNAL_SERVER'
 }
 
-export const allMessagesActionMapper = () => async (dispatch:any) =>{
+export const allSerbianMessagesActionMapper = () => async (dispatch:any) =>{
     try{
         let allMessages = await getAllSerbianMessages()
         if( allMessages.length === 0){

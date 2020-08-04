@@ -8,6 +8,7 @@ export const userTypes = {
 }
 
 export const allUsersActionMapper = () => async (dispatch:any) =>{
+    console.log("in all user action mapper!")
     try{
         let allUsers = await getAllUsers()
         if( allUsers.length === 0){

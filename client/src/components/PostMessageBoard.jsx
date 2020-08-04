@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Message } from "../models/Messages";
-
-
+import { useDispatch } from "react-redux";
+import { postMessage } from "../remote/postMessages"
 
 const PostMessage = (props) => {
 
@@ -23,19 +23,22 @@ const PostMessage = (props) => {
 //     return state.loginState.currentUser
 //   })
 
+    let dispatch = useDispatch();
+
     const submitMessage = async () => {
+        console.log(`submitting a message from ${currentUser.userId}`)
         let newMessage = new Message()
-        newMessage.userId = currentUser.userId;
+        newMessage.userId = 1;
         newMessage.message = message;
         newMessage.title = title;
-        newMessage.email = currentUser.email;
         try{
-            // await newMessageServer(newMessage)
+            let thunk = await postMessage(newMessage);
+            dispatch(thunk);
         } catch (e) {
             console.log(`Error from PostMessage ${e}`)
         }
 
-        props.history.push(`/MessageBoard`)
+        props.history.push(`/`)
     }
 
     return(

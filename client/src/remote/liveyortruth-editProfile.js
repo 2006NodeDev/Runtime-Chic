@@ -7,6 +7,6 @@ export const liveyourtruthEditUser = async (user) => {
     return response.data; //should be the user object
   } catch (e) {
     console.log(e);
-    throw error
+    throw e
   }
 };

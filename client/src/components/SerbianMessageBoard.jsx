@@ -3,9 +3,8 @@ import { User } from '../models/Users';
 import { MessageDisplay } from '../components/MessageDisplay';
 import { makeStyles } from '@material-ui/core/styles'; 
 import Button from '@material-ui/core/Button';
-import { useDispatch, useSelector } from 'react-redux';
-import { allMessagesActionMapper } from '../action-mappers/getMessages-action-mapper';
-import { allUsersActionMapper } from '../action-mappers/allUsers-action-mapper';
+import { useSelector, useDispatch } from 'react-redux';
+import { allSerbianMessagesActionMapper } from '../action-mappers/getSerbianMessages-action-mapper';
 
 const style = makeStyles((theme) => ({
     header:{
@@ -31,38 +30,29 @@ const style = makeStyles((theme) => ({
       },
 }));
 
-const MessageBoard = (props) =>{
+const SerbianMessageBoard = (props) =>{
     const classes = style();
     let dispatch = useDispatch();
 
-    // const getAllUsers = async () => {
-    //     try{
-    //         let thunk = allUsersActionMapper()
-    //         dispatch(thunk)
-    //     } catch (error){
-    //         console.log(error)
-    //     }
-    // }
-
-    const getMessages = async () => {
-        try{
-            console.log('getting messages...')
-            let thunk = allMessagesActionMapper()
-            dispatch(thunk)
-        } catch (error){
-            console.log(error)
-        }
-    }
-
     const allMessages = useSelector((state)=>{
-        return state.allMessageState.messageList
+        return state.allSerbianMessageState.messageList
     })
 
     // const allUsers = useSelector((state)=>{
     // return state.allUserState.userList
     // })
 
+    const getSerbianMessages = async () => {
+        try{
+            let thunk = allSerbianMessagesActionMapper()
+            dispatch(thunk)
+        } catch (error){
+            console.log(error)
+        }
+    }
+
         // Testing code
+
         let allUsers = [];
     
         let u1 = new User();
@@ -100,17 +90,16 @@ const MessageBoard = (props) =>{
             return <MessageDisplay key={'message-key-' + message.messageId} message={message} user={getUser(message.userId, allUsers)}/>
         })
     } else{
-        getMessages()
-        // getAllUsers()
+        getSerbianMessages();
     }
 
     return(
         <div className={classes.alignItemsAndJustifyContent}>
             <br/><h1 className={classes.header}> Message Board </h1> <br/>
-            <Button className={classes.button} variant="contained" disableElevation>Translate</Button><br/>
+            <Button className={classes.button} variant="contained" disableElevation>Back to English</Button><br/>
             <div className={classes.body}>{messageDisplays}</div>
         </div>
     )
 
 }
-export default MessageBoard;
+export default SerbianMessageBoard;

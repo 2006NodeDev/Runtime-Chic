@@ -9,12 +9,14 @@ export const loginTypes = {
     USER_LOGOUT: 'USER_LOGOUT'
 }
 
-export const LoginActionMapper = (username:string, password:string) => async (dispatch:any) => {
+export const LoginActionMapper = (body:any) => async (dispatch:any) => {
+    console.log(`We're in the action mapper!`)
     try{
-        if (username === 'logout'){
-            throw Error('logout') 
-        }
-        let currentUser = await liveyourtruthLogin (username,password)
+        // if (userEmail === 'logout'){
+        //     throw Error('logout') 
+        // }
+        let currentUser = await liveyourtruthLogin(body)
+        console.log(`currentUser.userEmail from action-mapper ${currentUser}`)
         dispatch({
             type:loginTypes.SUCCESSFUL_LOGIN,
             payload:{

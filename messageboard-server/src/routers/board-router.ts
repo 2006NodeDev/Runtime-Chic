@@ -5,11 +5,8 @@ import { publishMessage } from '../messaging/index';
 import { getTextToTranslate } from '../service/translation-service';
 import { logger } from '../util/loggers';
 import { userService } from '../remote/user-service/user-service';
-import { auth } from '../middleware/authentication-middleware'
 
 export const boardRouter = express.Router();
-
-boardRouter.use(auth);
 
 boardRouter.get('/', async (req:Request, res:Response, next:NextFunction)=>{
     try {
@@ -29,7 +26,8 @@ boardRouter.get('/', async (req:Request, res:Response, next:NextFunction)=>{
 //     "email" : "runtime.sheek@gmail.com"
 // }
 
-boardRouter.post('/',  auth, async (req:Request, res:Response, next:NextFunction) => {
+boardRouter.post('/',  async (req:Request, res:Response, next:NextFunction) => {
+    logger.info(`posting a message...`)
     try {
         let message = new Message();
         
@@ -39,10 +37,6 @@ boardRouter.post('/',  auth, async (req:Request, res:Response, next:NextFunction
 
         //User data from react post
         message.email = req.body.email
-
-        // temp for testing
-        let rand = Math.floor(Math.random()*10);
-        message.messageId = rand;
 
         let newMessage:Message;
         newMessage = await postMessage(message)
