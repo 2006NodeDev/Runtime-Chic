@@ -1,5 +1,6 @@
 import { getAllMessages } from "../remote/getMessages"
 
+
 export const messageTypes = {
     SUCCUSSFUL_REQUEST: 'P2_SUCCUSSFUL_All_MESSAGES',
     AUTHORIZATION_ERROR: 'P2_UNAUTHORIZED',
@@ -10,9 +11,9 @@ export const messageTypes = {
 export const allMessagesActionMapper = () => async (dispatch:any) =>{
     try{
         let allMessages = await getAllMessages()
-        if( allMessages.length === 0){
-            throw new Error('No Messages')
-        }
+        // if( allMessages.length === 0){
+        //     throw new Error('No Messages')
+        // }
         dispatch({
             type:messageTypes.SUCCUSSFUL_REQUEST,
             payload:{

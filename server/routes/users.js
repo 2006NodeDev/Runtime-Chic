@@ -4,6 +4,7 @@ const jwtGenerator = require("../utils/jwt");
 const userRouter = express.Router();
 const bcrypt = require("bcrypt");
 const auth = require("../middleware/auth");
+const userConverter = require("../utils/userConverter");
 
 //register
 userRouter.post("/register", async (req, res) => {
@@ -108,7 +109,8 @@ userRouter.get("/get/allUsers", auth, async (req, res, next) =>{
     if (users.rows.length === 0){
       console.log(`users.rows.length === 0`)
     }
-    res.json(users.rows);
+    let result = users.rows.map(userConverter);
+    res.json(result);
     
   } catch (error) {
     console.log('Error getting User by Id')
