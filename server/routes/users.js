@@ -100,7 +100,7 @@ userRouter.get("/:id", async (req, res, next) =>{
   }
 });
 
-userRouter.get("/get/allUsers", auth, async (req, res, next) =>{
+userRouter.get("/get/allUsers", async (req, res, next) =>{
   try {
     const users = await pool.query(
       `select u.user_id, u.user_email, u.user_password, u.first_name, u.last_name, u.house, u.profile, h.house_id, h.house_name from harrypotter.users u

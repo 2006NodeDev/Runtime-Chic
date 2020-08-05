@@ -1,10 +1,9 @@
-import React from 'react';
-import { User } from '../models/Users';
+import React, { useState } from 'react';
 import { MessageDisplay } from '../components/MessageDisplay';
 import { makeStyles } from '@material-ui/core/styles'; 
-import Button from '@material-ui/core/Button';
 import { useSelector, useDispatch } from 'react-redux';
 import { allSerbianMessagesActionMapper } from '../action-mappers/getSerbianMessages-action-mapper';
+import Nav from './Nav';
 
 const style = makeStyles((theme) => ({
     header:{
@@ -31,6 +30,9 @@ const style = makeStyles((theme) => ({
 }));
 
 const SerbianMessageBoard = (props) =>{
+
+    let[allUsers, setAllUsers] = useState('');
+
     const classes = style();
     let dispatch = useDispatch();
 
@@ -38,9 +40,19 @@ const SerbianMessageBoard = (props) =>{
         return state.allSerbianMessageState.messageList
     })
 
-    // const allUsers = useSelector((state)=>{
-    // return state.allUserState.userList
-    // })
+    let url = process.env['USER_SERVICE_HOST'] || "http://localhost:3003";
+
+    const getAllUsers = async () =>{
+        try {
+            fetch(`${url}/api/users/get/allUsers`)
+            .then(response => response.json())
+            .then((data) => {
+                setAllUsers(data);
+            })
+        } catch (error) {
+            console.log('No Users in MessageBoard')
+        }
+    }
 
     const getSerbianMessages = async () => {
         try{
@@ -51,35 +63,6 @@ const SerbianMessageBoard = (props) =>{
         }
     }
 
-        // Testing code
-
-        let allUsers = [];
-    
-        let u1 = new User();
-        u1.userId = 1;
-        u1.username = 'Harry';
-        u1.houseId = 1;
-    
-        let u2 = new User();
-        u2.userId = 2;
-        u2.username = 'Draco';
-        u2.house = 2;
-
-        let u3 = new User();
-        u3.userId = 3;
-        u3.username = 'Luna';
-        u3.house = 3;
-
-        let u4 = new User();
-        u4.userId = 4;
-        u4.username = 'Cedric';
-        u4.house = 4;
-    
-        allUsers.push(u1)
-        allUsers.push(u2)
-        allUsers.push(u3)
-        allUsers.push(u4)
-
     const getUser = (messageId, allUsers) => {
         let result = allUsers.find(user => user.userId === messageId);
         return result
@@ -89,15 +72,17 @@ const SerbianMessageBoard = (props) =>{
         messageDisplays = allMessages.map((message)=>{
             return <MessageDisplay key={'message-key-' + message.messageId} message={message} user={getUser(message.userId, allUsers)}/>
         })
-    } else{
-        getSerbianMessages();
+    } else if(allUsers){
+        getSerbianMessages()
+    }else{
+        getAllUsers()
     }
 
     return(
         <div className={classes.alignItemsAndJustifyContent}>
-            <br/><h1 className={classes.header}> Message Board </h1> <br/>
-            <Button className={classes.button} variant="contained" disableElevation>Back to English</Button><br/>
-            <div className={classes.body}>{messageDisplays}</div>
+            <Nav /><br/>
+            <br/><h1 className={classes.header}>Doshka oholoshenʹ</h1> <br/>
+            <div className={classes.body}>{messageDisplays}</div><br/>
         </div>
     )
 
