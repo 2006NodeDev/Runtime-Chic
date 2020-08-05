@@ -23,7 +23,6 @@ boardRouter.get('/', async (req:Request, res:Response, next:NextFunction)=>{
 //     "userId":3,
 //     "title":"new message from postman",
 //     "message": "This is a new message! Did i make it?",
-//     "email" : "runtime.sheek@gmail.com"
 // }
 
 boardRouter.post('/',  async (req:Request, res:Response, next:NextFunction) => {

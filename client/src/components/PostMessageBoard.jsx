@@ -2,40 +2,38 @@ import React, { useState } from "react";
 import Nav from "./Nav";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { postMessage } from "../remote/postMessages"
+import { Message } from "../models/Messages";
+import { postMessageActionMapper } from "../action-mappers/postMessage-action-mapper";
 
 const PostMessage = (props) => {
 
-    const [inputs, setInputs] = useState({
-        title: "",
-        message: "",
-    })
+    let[message, changeMessage] = useState('')
+    let[title, changeTitle] = useState('')
 
-    const { title, message } = inputs;
-
-    const onChange = (e) => {
-        setInputs({ ...inputs, [e.target.name]: e.target.value });
+    const updateMessage = (e) => {
+        e.preventDefault()
+        changeMessage(e.currentTarget.value)
     }
 
-    const currentUser = props.user;
+    const updateTitle = (e) => {
+        e.preventDefault()
+        changeTitle(e.currentTarget.value)
+    }
+;
+//   let currentUser = useSelector((state)=>{
+//     return state.loginState.currentUser
+//   })
+
     let dispatch = useDispatch()
 
     const submitMessage = async () => {
-        console.log(`submitting a message from ${currentUser.userId}`)
-        let userId = props.user.userId || 1
-        let body = { userId, title, message }
+        let newMessage = new Message()
+        newMessage.userId = 2;
+        newMessage.message = message;
+        newMessage.title = title;
         try{
-            let thunk = await postMessage(body);
+            let thunk = await postMessageActionMapper(newMessage);
             dispatch(thunk);
-            // const response = await fetch(`http://localhost:2007/board`, {
-            //     method: "POST",
-            //     headers: { 
-            //         "Content-Type" : "application/json",
-            //         "jwt_token": localStorage.token 
-            //     },
-            //     body: body,
-            // });
-            // const parseRes = await response.json();
             console.log('posting...');
         } catch (e) {
             console.log(`Error from PostMessage ${e}`)
@@ -46,12 +44,9 @@ const PostMessage = (props) => {
         <div>
             <Nav />
             <h1 className="mt-5 text-center">Post a Message</h1>
-            <form onSubmit={submitMessage} id='messageForm'>
-                <input type='text' name='title' placeholder='title' value={title} onChange={(e) => onChange(e)}/><br/><br/>
-                <textarea rows='3' className="form-control" name='message' placeholder='message' value={message} onChange={(e) => onChange(e)}/><br/><br/>
-
-                <button className="btn btn-success" type='submit'>Submit</button>
-            </form>
+                <input type='text' name='title' placeholder='title' value={title} onChange={updateTitle}/><br/><br/>
+                <textarea rows='3' className="form-control" name='message' placeholder='message' value={message} onChange={updateMessage}/><br/><br/>
+                <button className="btn btn-success" type='submit' onClick={submitMessage} >Submit</button>
             <br/>
             <Link to="/messageboard">Back to Message Board</Link>
         </div>
