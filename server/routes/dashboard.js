@@ -3,9 +3,9 @@ const auth = require("../middleware/auth");
 const pool = require("../db");
 const axios = require("axios");
 const bcrypt = require("bcrypt");
-const { listenForMessages } = require("../service/Gcp/user-notification");
+const { notification } = require("../service/Gcp/user-notification");
 
-dashRouter.post("/", auth, async (req, res) => {
+dashRouter.post("/", async (req, res) => {
   try {
     const user = await pool.query(
       "SELECT u.first_name, u.house, u.profile, h.house_id, h.house_name FROM harrypotter.users u left join harrypotter.house h on u.house = h.house_id   WHERE u.user_id = $1",
@@ -24,10 +24,41 @@ dashRouter.post("/", auth, async (req, res) => {
 //     console.log(res);
 //   });
 // });
+dashRouter.delete("notifications/", async (req, res) => {
+  try {
+  } catch (error) {}
+});
+
 dashRouter.get("/notifications", async (req, res, next) => {
   try {
-    let response = await listenForMessages;
-    res.send(`this is the response: ${response}`);
+    let userId = parseInt(req.params.id);
+    const response = await notification;
+
+    // res.send(response);
+    const notification = await pool.query("");
+    // let title = response.title;
+
+    // let newMessage = response.map((message) => {
+    //   return message.map((second) => {
+    //     return second.map((last) => {
+    //       return last.title;
+    //     });
+    //   });
+    // });
+    console.log(`underneath is the response`);
+    // console.log(newMessage);
+
+    // console.log(newMessage);
+
+    // let newNotification = {
+    //   nId: message.messageId,
+    //   nUser: message.userId,
+    //   nTitle: message.title,
+    //   nMessage: message.message,
+    //   nDate: message.date,
+    // };
+
+    res.json(response);
   } catch (error) {
     console.log(error);
   }
