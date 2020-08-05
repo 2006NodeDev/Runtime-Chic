@@ -7,11 +7,11 @@ spec:
   rules:
   - http:
       paths:
-      - path: /server/*
+      - path: /user-service/*
         backend:
           serviceName: server
           servicePort: 3003
-      - path: /messageboard-server/*
+      - path: /messageboard-service/*
         backend:
           serviceName: messageboard-server
           servicePort: 2007
