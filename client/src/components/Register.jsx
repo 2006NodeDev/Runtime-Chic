@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import FileUpload from "./FileUpload";
 
-const Register = ({ setCurrentUser, setAuth }) => {
+const Register = ({ getRegisteredUser }) => {
   const [inputs, setInputs] = useState({
     userEmail: "",
     userPassword: "",
@@ -12,35 +12,41 @@ const Register = ({ setCurrentUser, setAuth }) => {
     lastName: "",
   });
 
-  const { userEmail, userPassword, firstName, lastName } = inputs;
+  // const { userEmail, userPassword, firstName, lastName } = inputs;
 
   const onChange = (e) =>
     setInputs({ ...inputs, [e.target.name]: e.target.value });
 
   const onSubmitForm = async (e) => {
     e.preventDefault();
-    try {
-      const body = { userEmail, userPassword, firstName, lastName };
-      const response = await fetch("http://localhost:3003/api/users/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(body),
-      });
-      const parseRes = await response.json();
-      setCurrentUser(parseRes);
-      if (parseRes.jwtToken) {
-        localStorage.setItem("token", parseRes.jwtToken);
-        setAuth(true);
-        toast.success("Register Successfully");
-      } else {
-        setAuth(false);
-        toast.error(parseRes);
-      }
-    } catch (err) {
-      console.error(err.message);
-    }
+    getRegisteredUser(
+      inputs.userEmail,
+      inputs.userPassword,
+      inputs.firstName,
+      inputs.lastName
+    );
+    // try {
+    //   const body = { userEmail, userPassword, firstName, lastName };
+    //   const response = await fetch("http://localhost:3003/api/users/register", {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify(body),
+    //   });
+    //   const parseRes = await response.json();
+    //   setCurrentUser(parseRes);
+    //   if (parseRes.jwtToken) {
+    //     localStorage.setItem("token", parseRes.jwtToken);
+    //     setAuth(true);
+    //     toast.success("Register Successfully");
+    //   } else {
+    //     setAuth(false);
+    //     toast.error(parseRes);
+    //   }
+    // } catch (err) {
+    //   console.error(err.message);
+    // }
   };
 
   return (
@@ -52,7 +58,7 @@ const Register = ({ setCurrentUser, setAuth }) => {
         <input
           type="text"
           name="userEmail"
-          value={userEmail}
+          value={inputs.userEmail}
           placeholder="email"
           onChange={(e) => onChange(e)}
           className="form-control my-3"
@@ -60,7 +66,7 @@ const Register = ({ setCurrentUser, setAuth }) => {
         <input
           type="password"
           name="userPassword"
-          value={userPassword}
+          value={inputs.userPassword}
           placeholder="password"
           onChange={(e) => onChange(e)}
           className="form-control my-3"
@@ -68,7 +74,7 @@ const Register = ({ setCurrentUser, setAuth }) => {
         <input
           type="text"
           name="firstName"
-          value={firstName}
+          value={inputs.firstName}
           placeholder="first name"
           onChange={(e) => onChange(e)}
           className="form-control my-3"
@@ -76,7 +82,7 @@ const Register = ({ setCurrentUser, setAuth }) => {
         <input
           type="text"
           name="lastName"
-          value={lastName}
+          value={inputs.lastName}
           placeholder="last name"
           onChange={(e) => onChange(e)}
           className="form-control my-3"

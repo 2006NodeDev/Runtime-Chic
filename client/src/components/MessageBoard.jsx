@@ -1,32 +1,38 @@
+
 import React, { useState } from 'react';
-import { MessageDisplay } from '../components/MessageDisplay';
-import { makeStyles } from '@material-ui/core/styles'; 
+import React from "react";
+import { Message } from "../models/Messages";
+import { User } from "../models/Users";
+import { MessageDisplay } from "../components/MessageDisplay";
+import { makeStyles } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
 import { useDispatch, useSelector } from 'react-redux';
 import { allMessagesActionMapper } from '../action-mappers/getMessages-action-mapper';
 import Nav from './Nav';
 
+
 const style = makeStyles((theme) => ({
-    header:{
-        alignSelf:'center',
-        alignItems:'center',
-    },
-    body:{
-        alignSelf:'center',
-        alignItems:'center',
-        width: 600,
-    },
-    button:{
-        backgroundColor:'midnightblue',
-        color:'white',
-        alignSelf:'center',
-        alignItems:'center',
-        width: 100,
-    },
-    alignItemsAndJustifyContent: {
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-      },
+  header: {
+    alignSelf: "center",
+    alignItems: "center",
+  },
+  body: {
+    alignSelf: "center",
+    alignItems: "center",
+    width: 600,
+  },
+  button: {
+    backgroundColor: "midnightblue",
+    color: "white",
+    alignSelf: "center",
+    alignItems: "center",
+    width: 100,
+  },
+  alignItemsAndJustifyContent: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+  },
 }));
 
 const MessageBoard = (props) =>{

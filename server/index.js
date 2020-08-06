@@ -18,9 +18,10 @@ const multerMid = multer({
 });
 
 app.disable("x-powered-by");
-app.use(multerMid.single("file"));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(multerMid.single("file"));
 app.use("/api/users", userRouter);
 app.use("/dashboard", dashRouter);
 
