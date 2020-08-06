@@ -47,7 +47,8 @@ userRouter.post("/login", async (req, res, next) => {
   const { userPassword, userEmail } = req.body;
   try {
     const user = await pool.query(
-      "SELECT * FROM harrypotter.users u WHERE u.user_email = $1",
+      `select u.user_id, u.user_email, u.user_password, u.first_name, u.last_name, u.house, u.profile, h.house_id, h.house_name from harrypotter.users u
+      join harrypotter.house h on u.house = h.house_id WHERE u.user_email = $1;`,
       [userEmail]
     );
 

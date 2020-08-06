@@ -1,10 +1,10 @@
-export let rcBaseUrl:string
-//this is the only env we get in front end, and technically anyone that downloads the site can read it 
-if(process.env['NODE_ENV'] === 'production'){
-    //if we ran npm run build
-    //use the deployed address
-    // lbBaseUrl = 'https://node-service.js-army.com'
-}else {
-    //we are in test or dev, use the local address
-    rcBaseUrl = 'http://localhost:3030/user-service'
+export let rcBaseUrl: string;
+//this is the only env we get in front end, and technically anyone that downloads the site can read it
+if (process.env["NODE_ENV"] === "production") {
+  //if we ran npm run build
+  //use the deployed address
+  // lbBaseUrl = 'https://node-service.js-army.com'
+} else {
+  //we are in test or dev, use the local address
+  rcBaseUrl = "http://localhost:3030/user-service";
 }

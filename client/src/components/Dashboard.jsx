@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+// import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import gryffindor from "../images/gryffindor.png";
@@ -8,16 +9,15 @@ import hufflepuff from "../images/hufflepuff.png";
 import FileUpload from "./FileUpload";
 import Nav from "./Nav";
 
-const Dashboard = (props) => {
-  const userReducer = useSelector((state) => state.userReducer);
-  // const [name, setName] = useState("");
-  // const [houseImg, sethouseImg] = useState([]);
-  // const [profileImg, setProfileImg] = useState("");
-  // const [members, setMembers] = useState([]);
-  console.log(userReducer);
+const Dashboard = ({ setAuth, currentUser }) => {
+  //  const [name, setName] = useState("");
+  //  const [houseImg, sethouseImg] = useState([]);
+  //  const [profileImg, setProfileImg] = useState("");
+  //  const [members, setMembers] = useState([]);
+  console.log(currentUser);
   // const getProfile = async () => {
   //   try {
-  //     const res = await fetch("http://localhost:3003/dashboard", {
+  //     const res = await fetch("http:/localhost:3003/dashboard", {
   //       method: "POST",
   //       headers: { jwt_token: localStorage.token },
   //     });
@@ -29,8 +29,8 @@ const Dashboard = (props) => {
   //     setName(parseData.first_name);
   //     sethouseImg(parseData.house_name);
   //     setProfileImg(parseData.profile);
-  //     // console.log("FRIENDS");
-  //     // console.log(parseData);
+  //     console.log("FRIENDS");
+  //     console.log(parseData);
   //   } catch (err) {
   //     console.error(err.message);
   //   }
@@ -53,10 +53,11 @@ const Dashboard = (props) => {
     e.preventDefault();
     try {
       localStorage.removeItem("token");
-      // setAuth(false);
+      setAuth(false);
       toast.success("Logout successfully");
     } catch (err) {
       console.error(err.message);
+      // history.push("/");
     }
   };
 
@@ -68,37 +69,39 @@ const Dashboard = (props) => {
 
   return (
     <div>
-      {/* // <div id="dashMainDiv">
-    //   <Nav profileImg={profileImg} /> */}
-      {/* //   <div id="welcomeBanner">
-    //     <h1>Welcome {name.toUpperCase()}</h1>
-    //     <img id="userImg" src={profileImg} alt="" />
-    //   </div>
-    //   <div id="">
-    //     <h1>
-    //       <span id="houseSpan1">hmmmmmm.....</span>{" "}
-    //       <span id="houseSpan2">{houseImg}!!!!</span>
-    //     </h1>
-    //   </div>
-    //   <div id="houseImgDiv">
-    //     {(() => { */}
-      {/* //       switch (houseImg) { */}
-      {/* //         case "Gryffindor":
-    //           return <img className="houseImage" src={gryffindor} alt="" />;
-    //         case "Slytherin":
-    //           return <img className="houseImage" src={slytherin} alt="" />;
-    //         case "Ravenclaw":
-    //           return <img className="houseImage" src={ravenclaw} alt="" />;
-    //         case "Hufflepuff":
-    //           return <img className="houseImage" src={hufflepuff} alt="" />;
-    //       }
-    //     })()} */}
-      {/* //   </div> */}
-      <p>i hope this works</p>
-      <h1>{userReducer.user.user_email}</h1>
-      <button onClick={(e) => logout(e)} className="btn btn-primary">
-        Logout
-      </button>
+      <div id="dashMainDiv">
+        <Nav />
+        <div id="welcomeBanner">
+          <h1>Welcome </h1>
+          {/* <img id="userImg" src={profileImg} alt="" /> */}
+        </div>
+        <div id="">
+          <h1>
+            <span id="houseSpan1">hmmmmmm.....</span>{" "}
+            <span id="houseSpan2">{currentUser.house_name}!!!!</span>
+          </h1>
+          <h1>{currentUser.first_name}</h1>
+        </div>
+        <div id="houseImgDiv">
+          {(() => {
+            switch (currentUser.house_name) {
+              case "Gryffindor":
+                return <img className="houseImage" src={gryffindor} alt="" />;
+              case "Slytherin":
+                return <img className="houseImage" src={slytherin} alt="" />;
+              case "Ravenclaw":
+                return <img className="houseImage" src={ravenclaw} alt="" />;
+              case "Hufflepuff":
+                return <img className="houseImage" src={hufflepuff} alt="" />;
+            }
+          })()}
+        </div>
+        <p>i hope this works</p>
+
+        <button onClick={(e) => logout(e)} className="btn btn-primary">
+          Logout
+        </button>
+      </div>
     </div>
   );
 };

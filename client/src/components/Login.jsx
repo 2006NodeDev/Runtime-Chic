@@ -4,10 +4,10 @@ import { loginTypes } from "../action-mappers/login-action-mapper";
 import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
 import { connect } from "react-redux";
-import { fetchUser } from "../userRedux/actions/userAction";
+
 toast.configure();
 
-const Login = ({ mapStateToProps, mapDispatchToProps }) => {
+const Login = ({ getUser }) => {
   const [inputs, setInputs] = useState({
     userEmail: "",
     userPassword: "",
@@ -20,12 +20,9 @@ const Login = ({ mapStateToProps, mapDispatchToProps }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    fetchUser(inputs);
+    getUser(inputs.userEmail, inputs.userPassword);
     console.log(inputs);
   };
-  if (user) {
-    return <Redirect to="/dashboard" />;
-  }
 
   return (
     <div id="MainDiv">
@@ -60,11 +57,11 @@ const Login = ({ mapStateToProps, mapDispatchToProps }) => {
   );
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    fetchUser: (userInfo) => dispatch(fetchUser(userInfo)),
-  };
-};
-const mapStateToProps = (state) => ({ user: state.user });
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     LoginActionMapper: (userEmail, userPassword) =>
+//       dispatch(LoginActionMapper(userEmail, userPassword)),
+//   };
+// };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default Login;
