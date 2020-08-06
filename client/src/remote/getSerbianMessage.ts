@@ -1,5 +1,3 @@
-import { liveyourtruthClient } from ".";
-
 import { service } from "./index";
 
 export const getAllSerbianMessages = async () =>{

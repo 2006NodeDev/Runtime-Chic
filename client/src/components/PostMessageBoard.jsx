@@ -19,10 +19,6 @@ const PostMessage = (props) => {
         e.preventDefault()
         changeTitle(e.currentTarget.value)
     }
-;
-//   let currentUser = useSelector((state)=>{
-//     return state.loginState.currentUser
-//   })
 
     let dispatch = useDispatch()
 

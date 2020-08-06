@@ -25,20 +25,21 @@ spec:
         imagePullPolicy: Always
         env:
         - name: MB_HOST
-          value: "10.58.96.3"
+          value: "34.86.141.95"
         - name: MB_DATABASE
-          value: "lb-micro"
+          value: "message-board"
         - name: MB_USER
           value: "postgres"
         - name: MB_BASE_PATH
           value: "/messageboard-server"
-        - name: MB_USER_SERVICE_HOST
+        - name: RC_BASE_PATH
+          value: "/user-service"
+        - name: USER_SERVICE_HOST
           value: "http://rc-user-service-service:3003/user-service"
+        - name: MESSAGEBOARD_SERVICE_HOST
+          value: "http://rc-messageboard-service-service:2007/messageboard-service"
         - name: MB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: lb-user-service-secrets
-              key: password
+          value:
         ports:
         - containerPort: 2007
         livenessProbe:

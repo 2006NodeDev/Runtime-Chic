@@ -5,7 +5,7 @@ metadata:
   namespace: istio-system
 spec:
   gateways:
-  - lb-demos/lb-gateway
+  - runtime-chick/rc-gateway
   hosts:
   - "*" # interpreted as reviews.foo.svc.cluster.local
   http:

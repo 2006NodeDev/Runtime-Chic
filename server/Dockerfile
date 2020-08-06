@@ -1,6 +1,5 @@
 FROM node:12.18
 
-COPY build runtimechick-user-service/build/
-COPY node_modules runtimechick-user-service/node_modules/
+COPY node_modules rc-user-service/node_modules/
 
-CMD npm run deploy --prefix runtimechick-user-service/build
+CMD npm run server --prefix rc-user-service/

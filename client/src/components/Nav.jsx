@@ -21,6 +21,8 @@ const Nav = ({ currentUser }) => {
           <br />
           <Link to="/messageboard">Message Board</Link>
           <br />
+          <Link to="/messageboard/translate">Translated Message Board</Link>
+          <br />
           <Link to="/messageboard/post">Post Message</Link>
         </div>
       </div>

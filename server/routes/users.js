@@ -102,7 +102,9 @@ userRouter.get("/:id", async (req, res, next) => {
   }
 });
 
-userRouter.get("/get/allUsers", async (req, res, next) => {
+
+userRouter.get("/get/allUsers", async (req, res, next) =>{
+
   try {
     const users = await pool.query(
       `select u.user_id, u.user_email, u.user_password, u.first_name, u.last_name, u.house, u.profile, h.house_id, h.house_name from harrypotter.users u
@@ -111,13 +113,10 @@ userRouter.get("/get/allUsers", async (req, res, next) => {
     if (users.rows.length === 0) {
       console.log(`users.rows.length === 0`);
     }
-<<<<<<< HEAD
-    res.json(users.rows);
-=======
+
     let result = users.rows.map(userConverter);
     res.json(result);
-    
->>>>>>> master
+
   } catch (error) {
     console.log("Error getting User by Id");
     res.status(500).send("Server error");

@@ -86,10 +86,10 @@ export const MessageDisplay = (props)=>{
         <CardHeader
           avatar={
             <Avatar aria-label="recipe" className={character.avatar}>
-              {/* {props.user.house.charAt(0).toUpperCase()} */}
+              {props.user.house.charAt(0).toUpperCase()}
             </Avatar>
           }
-          title={`${props.user.username}`}
+          title={`${props.user.userEmail}`}
           subheader={`${props.message.date}`}
         />
         <CardContent className={classes.subject}>

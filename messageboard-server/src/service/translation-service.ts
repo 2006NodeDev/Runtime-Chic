@@ -9,7 +9,7 @@ const {Translate} = require('@google-cloud/translate').v2;
 const translate = new Translate();
 
 // set langauge to translate to
-const target = 'hr';//{ code: 'hr', name: 'Croatian' }
+const target = 'uk';//{ code: 'uk', name: 'Ukranian' }
 
 export async function getTextToTranslate(message:Message):Promise<Message>{
 
