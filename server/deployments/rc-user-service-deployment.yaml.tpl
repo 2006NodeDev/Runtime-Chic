@@ -24,19 +24,16 @@ spec:
         image: gcr.io/tenacious-text-279818/rc-user-service:COMMIT_SHA
         imagePullPolicy: Always
         env:
-        - name: MB_HOST
+        - name: RC_HOST
           value: "34.86.141.95"
-        - name: USER_DATABASE
+        - name: RC_DATABASE
           value: "postgres"
-        - name: MB_USER
+        - name: RC_USER
           value: "postgres"
         - name: RC_BASE_PATH
           value: "/user-service"
         - name: RC_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: rc-user-service-secrets
-              key: password
+          value: 
         ports:
         - containerPort: 3003
         livenessProbe:

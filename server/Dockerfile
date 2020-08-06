@@ -1,5 +1,5 @@
 FROM node:12.18
 
-COPY node_modules runtimechick-user-service/node_modules/
+COPY node_modules rc-user-service/node_modules/
 
-CMD npm run server --prefix runtimechick-user-service/
+CMD npm run server --prefix rc-user-service/
