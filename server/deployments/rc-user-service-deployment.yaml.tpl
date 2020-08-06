@@ -30,8 +30,10 @@ spec:
           value: "postgres"
         - name: RC_USER
           value: "postgres"
-        - name: RC_BASE_PATH
+        - name: USER_BASE_PATH
           value: "/user-service"
+        - name: USER_SERVICE_HOST
+          value: "http://rc-user-service-service:3003/user-service"
         - name: RC_PASSWORD
           value: 
         ports:
