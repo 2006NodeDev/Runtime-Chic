@@ -2,14 +2,14 @@ import React from "react";
 import { useHistory, Link } from "react-router-dom";
 import FileUpload from "./FileUpload";
 
-const Nav = ({ profileImg }) => {
+const Nav = ({ currentUser }) => {
   const history = useHistory();
+  console.log(currentUser);
 
   const routeChange = () => {
     let path = `/userprofile`;
     history.push(path);
   };
-  console.log(profileImg);
 
   return (
     <div>
@@ -38,14 +38,14 @@ const Nav = ({ profileImg }) => {
         </button>
         <h1>HOGWARTS</h1>
         <button onClick={routeChange}>
-          {(() => {
-            switch (profileImg) {
-              case !profileImg:
+          {/* {(() => {
+            switch (currentUser) {
+              case !currentUser:
                 return <i class="fas fa-user"></i>;
-              case profileImg:
-                return <img id="navProfileImg" src={profileImg} alt="" />;
+              case currentUser:
+                return <img id="navProfileImg" src={} alt="" />;
             }
-          })()}
+          })()} */}
         </button>
       </nav>
     </div>

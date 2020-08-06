@@ -1,3 +1,8 @@
+#root {
+  height: 100vh;
+  width: 100vw;
+}
+
 #loginForm {
   margin-top: 40px;
 }
@@ -73,22 +78,45 @@
   margin-bottom: 0px;
 } */
 .houseImage {
-  width: 300px;
-  height: 300px;
+  width: 200px;
+  height: 200px;
 }
 #houseImgDiv {
-  display: flex;
-  justify-content: center;
-  opacity: 0;
+  /* display: flex;
+  justify-content: center; */
+  /* opacity: 0;
   animation-name: fadeIn;
   animation-delay: 4s;
-  animation-duration: 15s;
+  animation-duration: 10s;
+  z-index: 1;  */
+  height: 250px;
+  width: 200px;
+  margin-left: 30px;
 }
 #dashMainDiv {
   height: 100vh;
   width: 100vw;
-  background-color: grey;
+  display: flex;
+  flex-direction: column;
+  background: url(https://i.pinimg.com/originals/c7/43/7c/c7437c4df477068410ce0447bd1d5da7.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
 }
+#dashInfoDiv {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+#dashboardBackground {
+  height: 100vh;
+  width: 100vw;
+  /* background: url(https://i.pinimg.com/originals/c7/43/7c/c7437c4df477068410ce0447bd1d5da7.jpg); */
+  /* background-repeat: no-repeat;
+  background-size: cover; */
+
+  z-index: 2;
+}
+
 #welcomeBanner {
   display: flex;
   flex-direction: row;
@@ -133,6 +161,24 @@
   border-radius: 100%;
   width: 100px;
   height: 100px;
+}
+#userProfileImg {
+  border-radius: 100%;
+  width: 150px;
+  height: 150px;
+}
+#userProfileDiv {
+  width: 300px;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  background-color: grey;
+  margin-top: 50px;
+}
+#userInfoProfile {
+  margin-top: 10px;
+  text-align: center;
+  font-family: "Lemonada", cursive;
 }
 
 @keyframes fadeInOut {

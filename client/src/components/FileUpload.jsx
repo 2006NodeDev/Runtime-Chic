@@ -1,11 +1,15 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import Nav from "./Nav";
 
-const FileUpload = () => {
+const FileUpload = ({ currentUser }) => {
+  const history = useHistory();
+
   const [file, setFile] = useState({
     preview: "",
     img: "",
   });
+  console.log(currentUser);
 
   const onChangeHandler = (e) => {
     setFile({
@@ -20,7 +24,7 @@ const FileUpload = () => {
     try {
       const formData = new FormData();
       formData.append("file", file.img);
-      await fetch(`http://localhost:3003/uploads/1`, {
+      await fetch(`http://localhost:3003/uploads/${currentUser.user_id}`, {
         // headers: {
         //   Accept: "application/json",
         //   "Content-Type": "multipart/form-data",
@@ -30,7 +34,7 @@ const FileUpload = () => {
       })
         .then((response) => response.json())
         .then((data) => console.log(data));
-
+      history.push("/dashboard");
       // console.log(response);
     } catch (error) {
       console.log(error);

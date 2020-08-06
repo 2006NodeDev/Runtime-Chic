@@ -9,57 +9,57 @@ import { allSerbianMessagesReducer } from "./getSerbianMessage-reducer";
 import { postUserReducer } from "./postUser-reducer";
 import { postMessageReducer } from "./postMessage-reducer";
 
-export interface ILoginState{
-    currentUser:User,
-    errorMessage:string
+export interface ILoginState {
+  currentUser?: User;
+  errorMessage: string;
 }
 
-export interface IAllUsersState{
-    userList:User[],
-    errorMessage:string
+export interface IAllUsersState {
+  userList?: User[];
+  errorMessage: string;
 }
 
-export interface IeditUsersState{
-    user:User,
-    errorMessage:string
+export interface IeditUsersState {
+  user?: User;
+  errorMessage: string;
 }
 
-export interface IPostUsersState{
-    user:User,
-    errorMessage:string
+export interface IPostUsersState {
+  user?: User;
+  errorMessage: string;
 }
 
-export interface IAllMessagesState{
-    messageList:Message[],
-    errorMessage:string
+export interface IAllMessagesState {
+  messageList?: Message[];
+  errorMessage: string;
 }
 
-export interface IAllSerbianMessagesState{
-    messageList:Message[],
-    errorMessage:string
+export interface IAllSerbianMessagesState {
+  messageList?: Message[];
+  errorMessage: string;
 }
 
-export interface IPostMessageState{
-    message:Message,
-    errorMessage:string
+export interface IPostMessageState {
+  message?: Message;
+  errorMessage: string;
 }
 
-export interface IState{
-    loginState:ILoginState,
-    allUserState:IAllUsersState,
-    editUserState:IeditUsersState,
-    postUserState:IPostUsersState,
-    allMessageState:IAllMessagesState,
-    allSerbianMessageState:IAllSerbianMessagesState,
-    postMessageState:IPostMessageState,
+export interface IState {
+  loginState: ILoginState;
+  allUserState: IAllUsersState;
+  editUserState: IeditUsersState;
+  postUserState: IPostUsersState;
+  allMessageState: IAllMessagesState;
+  allSerbianMessageState: IAllSerbianMessagesState;
+  postMessageState: IPostMessageState;
 }
 
 export const state = combineReducers<IState>({
-    loginState:loginReducer,
-    allUserState:allUserReducer,
-    editUserState:editUserReducer,
-    postUserState:postUserReducer,
-    allMessageState:allMessagesReducer,
-    allSerbianMessageState:allSerbianMessagesReducer,
-    postMessageState:postMessageReducer,
-})
+  loginState: loginReducer,
+  allUserState: allUserReducer,
+  editUserState: editUserReducer,
+  postUserState: postUserReducer,
+  allMessageState: allMessagesReducer,
+  allSerbianMessageState: allSerbianMessagesReducer,
+  postMessageState: postMessageReducer,
+});

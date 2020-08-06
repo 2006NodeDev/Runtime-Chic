@@ -1,4 +1,5 @@
 //  const projectId = 'message-board-284300';
+
 const subscriptionName =
   "projects/message-board-284300/subscriptions/gcf-user-pubsub-us-east4-message-board-topic";
 
@@ -14,7 +15,9 @@ const pubSubClient = new PubSub({
 });
 let messageCount = 0;
 let messages = [];
-function listenForMessages() {
+
+const notification = [];
+const listenForMessages = () => {
   // References an existing subscription
   const subscription = pubSubClient.subscription(subscriptionName);
 
@@ -24,8 +27,8 @@ function listenForMessages() {
   const messageHandler = (message) => {
     console.log(`Received message ${message.id}:`);
     console.log(`\tData: ${message.data}`);
-    console.log(`\tAttributes: ${message.attributes}`);
     messageCount += 1;
+
     messages.push(JSON.parse(Buffer.from(message.data, "base64").toString()));
 
     // "Ack" (acknowledge receipt of) the message
@@ -43,12 +46,28 @@ function listenForMessages() {
       messageCount,
       messages,
     };
+
+    let getMessage = messages.map((message) => {
+      return {
+        title: message.title || null,
+        messageUser: message.userId || null,
+        message: message.message || null,
+      };
+    });
+
+    notification.push(getMessage);
+
     console.log(`${messageCount} message(s) received.`);
-    console.log(messages);
-    console.log(userNotification);
+    // console.log(messages);
+    // console.log(userNotification);
+    console.log(getMessage);
+    // console.log(notification.getMessage);
   }, timeout * 100);
-}
+};
 
 listenForMessages();
 
-module.exports = listenForMessages;
+module.exports = {
+  setTimeout,
+  notification,
+};

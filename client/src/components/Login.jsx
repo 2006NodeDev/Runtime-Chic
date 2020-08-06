@@ -1,49 +1,30 @@
 import React, { Fragment, useState } from "react";
 import { Link, Redirect } from "react-router-dom";
-import { baseUrl } from "../environment/environment"
+
+import { loginTypes } from "../action-mappers/login-action-mapper";
 
 import { toast } from "react-toastify";
+import { useSelector, useDispatch } from "react-redux";
+import { connect } from "react-redux";
+
 toast.configure();
 
-const Login = ({ setCurrentUser, setAuth }) => {
+const Login = ({ getUser }) => {
   const [inputs, setInputs] = useState({
     userEmail: "",
     userPassword: "",
   });
 
-  const { userEmail, userPassword } = inputs;
-
-  const onChange = (e) =>
+  const handleOnChange = (e) => {
+    e.persist();
     setInputs({ ...inputs, [e.target.name]: e.target.value });
+  };
 
-  const onSubmitForm = async (e) => {
+  const onSubmit = (e) => {
     e.preventDefault();
-    try {
-      const body = { userEmail, userPassword };
-      // const response = await fetch(`${baseUrl}/api/users/login`, {
-      const response = await fetch(`http://localhost:3003/api/users/login`, {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify(body),
-      });
 
-      const parseRes = await response.json();
-
-      setCurrentUser(parseRes);
-
-      if (parseRes.jwtToken) {
-        localStorage.setItem("token", parseRes.jwtToken);
-        setAuth(true);
-        toast.success("Logged in Successfully");
-      } else {
-        setAuth(false);
-        toast.error(parseRes);
-      }
-    } catch (err) {
-      console.error(err.message);
-    }
+    getUser(inputs.userEmail, inputs.userPassword);
+    console.log(inputs);
   };
 
   return (
@@ -55,19 +36,19 @@ const Login = ({ setCurrentUser, setAuth }) => {
         <div id="left-login"></div>
         <div id="right-login">
           <h1 id="formHeader">Login</h1>
-          <form id="loginForm" onSubmit={onSubmitForm}>
+          <form id="loginForm" onSubmit={onSubmit}>
             <input
               type="text"
               name="userEmail"
-              value={userEmail}
-              onChange={(e) => onChange(e)}
+              value={inputs.userEmail}
+              onChange={handleOnChange}
               className="form-control my-3"
             />
             <input
               type="password"
               name="userPassword"
-              value={userPassword}
-              onChange={(e) => onChange(e)}
+              value={inputs.userPassword}
+              onChange={handleOnChange}
               className="form-control my-3"
             />
             <button class="btn btn-success btn-block">Submit</button>
@@ -78,5 +59,12 @@ const Login = ({ setCurrentUser, setAuth }) => {
     </div>
   );
 };
+
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     LoginActionMapper: (userEmail, userPassword) =>
+//       dispatch(LoginActionMapper(userEmail, userPassword)),
+//   };
+// };
 
 export default Login;
