@@ -107,6 +107,12 @@
   flex-direction: row;
   justify-content: space-around;
 }
+#logoutButton {
+  width: 90px;
+  background-color: grey;
+  margin-left: 210px;
+  margin-top: 50px;
+}
 #dashboardBackground {
   height: 100vh;
   width: 100vw;

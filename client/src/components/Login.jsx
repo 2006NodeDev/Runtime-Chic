@@ -1,8 +1,6 @@
 import React, { Fragment, useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 
-import { loginTypes } from "../action-mappers/login-action-mapper";
-
 import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
 import { connect } from "react-redux";

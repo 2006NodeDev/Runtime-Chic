@@ -87,7 +87,11 @@ const Dashboard = ({ setAuth, currentUser }) => {
           <h1>{currentUser.first_name}</h1>
         </div> */}
         </div>
-        <button onClick={(e) => logout(e)} className="btn btn-primary">
+        <button
+          id="logoutButton"
+          onClick={(e) => logout(e)}
+          className="btn btn-primary"
+        >
           Logout
         </button>
       </div>
