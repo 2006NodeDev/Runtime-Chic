@@ -1,6 +1,6 @@
 FROM node:12.18
 
-COPY build runtimechick-user-service/build/
+COPY server runtimechick-user-service/server
 COPY node_modules runtimechick-user-service/node_modules/
 
-CMD npm run deploy --prefix runtimechick-user-service/build
+CMD npm run server --prefix runtimechick-user-service/server
