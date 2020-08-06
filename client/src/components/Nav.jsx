@@ -18,6 +18,10 @@ const Nav = ({ currentUser }) => {
           <Link to="/">login</Link>
           <br />
           <Link to="/userprofile/update">profile picture</Link>
+          <br />
+          <Link to="/messageboard">Message Board</Link>
+          <br />
+          <Link to="/messageboard/post">Post Message</Link>
         </div>
       </div>
       <nav class="navbar navbar-dark bg-dark">

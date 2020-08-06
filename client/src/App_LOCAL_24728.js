@@ -11,19 +11,13 @@ import Nav from "./components/Nav";
 import "./App.css";
 import Login from "./components/Login";
 import { toast } from "react-toastify";
-<<<<<<< HEAD
 import { store } from "./store";
-=======
-import { Provider } from 'react-redux';
->>>>>>> master
 import Register from "./components/Register";
 import Dashboard from "./components/Dashboard";
 import FileUpload from "./components/FileUpload";
 import UpdateForm from "./components/UpdateForm";
 import MessageBoard from "./components/MessageBoard";
 import PostMessageBoard from "./components/PostMessageBoard";
-import { store } from './store';
-import SerbianMessageBoard from "./components/SerbianMessageBoard";
 
 toast.configure();
 
@@ -118,11 +112,7 @@ function App() {
   };
 
   return (
-<<<<<<< HEAD
     <>
-=======
-    <div>
->>>>>>> master
       <Provider store={store}>
         <Router>
           <Switch>
@@ -131,19 +121,9 @@ function App() {
               path="/"
               render={(props) =>
                 !isAuthenticated ? (
-<<<<<<< HEAD
                   <Login {...props} setAuth={setAuth} getUser={getUser} />
                 ) : (
                   <Redirect to="/dashboard" />
-=======
-                  <Login
-                    {...props}
-                    setCurrentUser={setCurrentUser}
-                    setAuth={setAuth}
-                  />
-                ) : (
-                  <Redirect to="/dashboard" currentUser={currentUser} />
->>>>>>> master
                 )
               }
             />
@@ -154,19 +134,11 @@ function App() {
                 !isAuthenticated ? (
                   <Register
                     {...props}
-<<<<<<< HEAD
                     setAuth={setAuth}
                     getRegisteredUser={getRegisteredUser}
                   />
                 ) : (
                   <Redirect to="/dashboard" />
-=======
-                    setCurrentUser={setCurrentUser}
-                    setAuth={setAuth}
-                  />
-                ) : (
-                  <Redirect to="/dashboard" currentUser={currentUser} />
->>>>>>> master
                 )
               }
             />
@@ -177,7 +149,6 @@ function App() {
                 isAuthenticated ? (
                   <Dashboard
                     {...props}
-<<<<<<< HEAD
                     setAuth={setAuth}
                     currentUser={currentUser}
                   />
@@ -211,17 +182,12 @@ function App() {
                     {...props}
                     setAuth={setAuth}
                     currentUser={currentUser}
-=======
-                    currentUser={currentUser}
-                    setAuth={setAuth}
->>>>>>> master
                   />
                 ) : (
                   <Redirect to="/" />
                 )
               }
             />
-<<<<<<< HEAD
             <Route exact path="/messageboard" component={MessageBoard} />
             <Route
               exact
@@ -232,17 +198,6 @@ function App() {
         </Router>
       </Provider>
     </>
-=======
-            <Route exact path="/userprofile" currentUser={currentUser} component={FileUpload} />
-            <Route exact path="/userprofile/update" currentUser={currentUser} component={UpdateForm} />
-            <Route exact path="/messageboard" component={MessageBoard} />
-            <Route exact path="/messageboard/translate" component={SerbianMessageBoard} />
-            <Route exact path="/messageboard/post" component={PostMessageBoard} />
-          </Switch>
-        </Router>
-      </Provider>
-    </div>
->>>>>>> master
   );
 }
 

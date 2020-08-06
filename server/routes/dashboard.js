@@ -8,7 +8,7 @@ const { notification } = require("../service/Gcp/user-notification");
 dashRouter.post("/", auth, async (req, res) => {
   try {
     const user = await pool.query(
-      "SELECT u.first_name, u.house, u.profile, h.house_id, h.house_name FROM harrypotter.users u left join harrypotter.house h on u.house = h.house_id   WHERE u.user_id = $1",
+      "SELECT u.user_email, u.first_name, u.house, u.profile, h.house_id, h.house_name FROM harrypotter.users u left join harrypotter.house h on u.house = h.house_id   WHERE u.user_id = $1",
       [req.user]
     );
     console.log(user.rows);
