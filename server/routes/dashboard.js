@@ -5,7 +5,7 @@ const axios = require("axios");
 const bcrypt = require("bcrypt");
 const { notification } = require("../service/Gcp/user-notification");
 
-dashRouter.post("/", async (req, res) => {
+dashRouter.post("/", auth, async (req, res) => {
   try {
     const user = await pool.query(
       "SELECT u.first_name, u.house, u.profile, h.house_id, h.house_name FROM harrypotter.users u left join harrypotter.house h on u.house = h.house_id   WHERE u.user_id = $1",
@@ -24,7 +24,7 @@ dashRouter.post("/", async (req, res) => {
 //     console.log(res);
 //   });
 // });
-dashRouter.delete("notifications/", async (req, res) => {
+dashRouter.delete("/notifications", async (req, res) => {
   try {
   } catch (error) {}
 });
@@ -67,7 +67,7 @@ dashRouter.get("/notifications", async (req, res, next) => {
 dashRouter.patch("/update/:id", async (req, res, next) => {
   try {
     let userId = parseInt(req.params.id);
-    let { userEmail, userPassword, firstName, lastName, profile } = req.body;
+    let { userEmail, userPassword, firstName, lastName } = req.body;
     const salt = await bcrypt.genSalt(10);
     const bcryptPassword = await bcrypt.hash(userPassword, salt);
 
@@ -76,7 +76,6 @@ dashRouter.patch("/update/:id", async (req, res, next) => {
       userPassword: req.body.userPassword || undefined,
       firstName: req.body.firstName || undefined,
       lastName: req.body.lastName || undefined,
-      profile: req.body.profile || undefined,
     };
     if (userEmail) {
       await pool.query(
@@ -106,13 +105,7 @@ dashRouter.patch("/update/:id", async (req, res, next) => {
         [lastName, userId]
       );
     }
-    if (profile) {
-      await pool.query(
-        `update harrypotter.users set profile = $1 
-                              where "user_id" = $2;`,
-        [profile, userId]
-      );
-    }
+
     await pool.query("COMMIT;");
     res.send(updateUser);
   } catch (err) {

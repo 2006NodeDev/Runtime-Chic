@@ -1,9 +1,10 @@
 import React, { useState, Fragment } from "react";
-
+import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 toast.configure();
 
-const UpdateForm = () => {
+const UpdateForm = ({ setAuth, currentUser }) => {
+  const history = useHistory();
   const [inputs, setInputs] = useState({
     userEmail: "",
     userPassword: "",
@@ -25,16 +26,19 @@ const UpdateForm = () => {
   const onSubmitForm = async (e) => {
     e.preventDefault();
     try {
-      const body = { userEmail, userPassword, firstName, lastName, profile };
-      const response = await fetch("http://localhost:3003/dashboard/update", {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(body),
-      });
+      const body = { userEmail, userPassword, firstName, lastName };
+      const response = await fetch(
+        `http://localhost:3003/dashboard/update/${currentUser.user_id}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(body),
+        }
+      );
       const parseRes = await response.json();
-
+      history.push("/dashboard");
       toast.error(parseRes);
     } catch (err) {
       console.error(err.message);
@@ -75,14 +79,6 @@ const UpdateForm = () => {
           type="text"
           name="lastName"
           value={lastName}
-          placeholder="last name"
-          onChange={(e) => onChange(e)}
-          className="form-control my-3"
-        />
-        <input
-          type="file"
-          name="profile"
-          value={profile}
           placeholder="last name"
           onChange={(e) => onChange(e)}
           className="form-control my-3"

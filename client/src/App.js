@@ -44,15 +44,47 @@ function App() {
     setCurrentUser(response.user);
 
     console.log(currentUser);
-    if (response.token.jwtToken) {
-      localStorage.setItem("token", response.token.jwtToken);
+    if (response.token) {
       setAuth(true);
       toast.success("Logged in Successfully");
+      localStorage.setItem("token", response.token.jwtToken);
+      sessionStorage.setItem("CurrentUser", currentUser);
+    } else {
+      setAuth(false);
+      toast.error("Invalid Credentials");
+    }
+  };
+
+  const getRegisteredUser = async (
+    userEmail,
+    userPassword,
+    firstName,
+    lastName
+  ) => {
+    const body = { userEmail, userPassword, firstName, lastName };
+    const response = await fetch("http://localhost:3003/api/users/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    })
+      .then((response) => response.json())
+      .then((jsondata) => jsondata);
+
+    setCurrentUser(response.user);
+    console.log(currentUser);
+    if (response.token) {
+      setAuth(true);
+      toast.success("Logged in Successfully");
+      localStorage.setItem("token", response.token.jwtToken);
+      sessionStorage.setItem("CurrentUser", currentUser);
     } else {
       setAuth(false);
       toast.error("error");
     }
   };
+
   const checkAuthenticated = async () => {
     const token = localStorage.getItem("token");
     try {
@@ -80,7 +112,7 @@ function App() {
   };
 
   return (
-    <div>
+    <>
       <Provider store={store}>
         <Router>
           <Switch>
@@ -100,7 +132,11 @@ function App() {
               path="/register"
               render={(props) =>
                 !isAuthenticated ? (
-                  <Register {...props} setAuth={setAuth} />
+                  <Register
+                    {...props}
+                    setAuth={setAuth}
+                    getRegisteredUser={getRegisteredUser}
+                  />
                 ) : (
                   <Redirect to="/dashboard" />
                 )
@@ -121,8 +157,37 @@ function App() {
                 )
               }
             />
-            <Route exact path="/userprofile" component={FileUpload} />
-            <Route exact path="/userprofile/update" component={UpdateForm} />
+            <Route
+              exact
+              path="/userprofile"
+              render={(props) =>
+                isAuthenticated ? (
+                  <FileUpload
+                    {...props}
+                    setAuth={setAuth}
+                    currentUser={currentUser}
+                  />
+                ) : (
+                  <Redirect to="/" />
+                )
+              }
+            />
+
+            <Route
+              exact
+              path="/userprofile/update"
+              render={(props) =>
+                isAuthenticated ? (
+                  <UpdateForm
+                    {...props}
+                    setAuth={setAuth}
+                    currentUser={currentUser}
+                  />
+                ) : (
+                  <Redirect to="/" />
+                )
+              }
+            />
             <Route exact path="/messageboard" component={MessageBoard} />
             <Route
               exact
@@ -132,7 +197,7 @@ function App() {
           </Switch>
         </Router>
       </Provider>
-    </div>
+    </>
   );
 }
 

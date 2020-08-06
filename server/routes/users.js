@@ -35,7 +35,7 @@ userRouter.post("/register", async (req, res) => {
 
     const jwtToken = jwtGenerator(newUser.rows[0].user_id);
 
-    return res.json({ jwtToken });
+    return res.json({ user: newUser.rows[0], token: { jwtToken } });
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server error");
@@ -101,7 +101,7 @@ userRouter.get("/:id", async (req, res, next) => {
   }
 });
 
-userRouter.get("/get/allUsers", auth, async (req, res, next) => {
+userRouter.get("/get/allUsers", async (req, res, next) => {
   try {
     const users = await pool.query(
       `select u.user_id, u.user_email, u.user_password, u.first_name, u.last_name, u.house, u.profile, h.house_id, h.house_name from harrypotter.users u
