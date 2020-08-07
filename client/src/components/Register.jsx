@@ -54,7 +54,6 @@ const Register = ({ getRegisteredUser }) => {
       <h1 className="mt-5 text-center">Register</h1>
 
       <form onSubmit={onSubmitForm}>
-        <FileUpload />
         <input
           type="text"
           name="userEmail"

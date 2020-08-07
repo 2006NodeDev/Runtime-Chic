@@ -35,7 +35,6 @@ dashRouter.get("/notifications", async (req, res, next) => {
     const response = await notification;
 
     // res.send(response);
-    const notification = await pool.query("");
     // let title = response.title;
 
     // let newMessage = response.map((message) => {

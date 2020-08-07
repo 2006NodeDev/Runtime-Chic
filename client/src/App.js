@@ -48,12 +48,14 @@ function App() {
       setAuth(true);
       toast.success("Logged in Successfully");
       localStorage.setItem("token", response.token.jwtToken);
-      sessionStorage.setItem("CurrentUser", currentUser);
+      sessionStorage.setItem("CurrentUser", currentUser.lastName);
     } else {
       setAuth(false);
       toast.error("Invalid Credentials");
     }
   };
+  let userStorage = localStorage.getItem("CurrentUser");
+  console.log(userStorage);
 
   const getRegisteredUser = async (
     userEmail,
@@ -78,7 +80,8 @@ function App() {
       setAuth(true);
       toast.success("Logged in Successfully");
       localStorage.setItem("token", response.token.jwtToken);
-      sessionStorage.setItem("CurrentUser", currentUser);
+      const userStorage = sessionStorage.setItem("CurrentUser", currentUser);
+      console.log(userStorage);
     } else {
       setAuth(false);
       toast.error("error");

@@ -2,38 +2,34 @@ import React, { useState, useEffect } from "react";
 
 const Notifications = () => {
   const [data, setData] = useState([]);
-  //   const response = await fetch(`http://localhost:3003/dashboard/notifications`);
-  //   const parseRes = await response.json();
-  //   const getData = parseRes[0].map((item) => {
-  //     return item;
-  //   });
-  //   getData.forEach(function (entry) {
-  //     setData(entry);
-  //   });
+  // const response = await fetch(`http://localhost:3003/dashboard/notifications`);
+  // const parseRes = await response.json();
+  // const getData = parseRes[0].map((item) => {
+  //   return item;
+  // });
+  // getData.forEach(function (entry) {
+  //   setData(entry);
+  // });
   useEffect(async () => {
     await fetch("http://localhost:3003/dashboard/notifications")
       .then((res) => res.json())
       .then((response) => setData(response[0]));
   }, []);
-  //   const getArray = getData[0].map((item) => {
-  //     return item;
-  //   });
-  //   const getRealData = getArray.map((item) => {
-  //     return item.title;
-  //   });
+
+  const handleDelete = () => {};
+
   console.log(data);
-  for (let i = 0; i < data.length; i++) {
-    console.log(data[i].message);
-  }
+
   const notes = (
     <ul>
-      {data.map((note) => (
+      <li>{data[-1]}</li>
+      {/* {data.map((note) => (
         <li>
-          <h1>NEW MESSAGE</h1>
-          <h3>{note.title}</h3>
+          <h4>NEW MESSAGE</h4>
+          <p>{note.title}</p>
           <p>{note.message}</p>
         </li>
-      ))}
+      ))} */}
     </ul>
   );
 
