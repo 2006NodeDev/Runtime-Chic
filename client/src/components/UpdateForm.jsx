@@ -24,7 +24,6 @@ const UpdateForm = ({ setAuth, currentUser }) => {
     );
 
   const onSubmitForm = async (e) => {
-    e.preventDefault();
     try {
       const body = { userEmail, userPassword, firstName, lastName };
       const response = await fetch(

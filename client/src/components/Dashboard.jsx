@@ -8,6 +8,7 @@ import Notification from "./Notifications";
 
 import Nav from "./Nav";
 import MessageBoard from "./MessageBoard";
+import PostMessage from "./PostMessageBoard";
 
 const Dashboard = ({ setAuth, currentUser }) => {
   //  const [name, setName] = useState("");
@@ -49,7 +50,6 @@ const Dashboard = ({ setAuth, currentUser }) => {
   //   }
   // };
   const logout = async (e) => {
-    e.preventDefault();
     try {
       localStorage.removeItem("token");
       setAuth(false);
@@ -86,7 +86,9 @@ const Dashboard = ({ setAuth, currentUser }) => {
           </h1>
           <h1>{currentUser.first_name}</h1>
         </div> */}
+          <PostMessage />
         </div>
+
         <button
           id="logoutButton"
           onClick={(e) => logout(e)}

@@ -13,6 +13,7 @@ const style = makeStyles((theme) => ({
   header: {
     alignSelf: "center",
     alignItems: "center",
+    fontFamily: "Lemonada",
   },
   body: {
     alignSelf: "center",
@@ -30,6 +31,9 @@ const style = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
+    marginTop: "90px",
+    marginLeft: "90px",
+    overflow: "scroll",
   },
 }));
 
@@ -90,8 +94,6 @@ const MessageBoard = (props) => {
 
   return (
     <div className={classes.alignItemsAndJustifyContent}>
-      <br />
-      <br />
       <h1 className={classes.header}> Message Board </h1> <br />
       <div className={classes.body}>{messageDisplays}</div>
       <br />

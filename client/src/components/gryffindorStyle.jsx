@@ -22,8 +22,8 @@ export const gryffindorStyle = makeStyles((theme) => ({
     color: "#eeba30",
   },
   root: {
-    maxWidth: 600,
-
+    maxWidth: 500,
+    height: 150,
     backgroundColor: "#740001",
     color: "#eeba30",
     border: "solid black 2px",
