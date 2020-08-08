@@ -7,6 +7,8 @@ import { serbianRouter } from './routers/serbian-router';
 import { logger, errorLogger } from './util/loggers';
 
 const app = express();
+const basePath = process.env['MB_BASE_PATH'] || '' 
+const basePathRouter = express.Router();
 
 app.use(express.json({limit:'50mb'}));
 
@@ -16,9 +18,11 @@ app.use(corsFilter);
 
 app.use(JWTVerifyMiddleware);
 
-app.use('/board', boardRouter);
+app.use(basePath, basePathRouter);
 
-app.use('/serbian', serbianRouter);
+basePathRouter.use('/board', boardRouter);
+
+basePathRouter.use('/serbian', serbianRouter);
 
 app.get('/health', (req:Request, res:Response)=>{
     res.sendStatus(200);

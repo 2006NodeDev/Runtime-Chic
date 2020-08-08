@@ -1,5 +1,4 @@
 import { Pool } from "pg";
-require("dotenv").config();
 
 export const connectionPool: Pool = new Pool({
   host: "34.86.141.95", // public ip of db instance
