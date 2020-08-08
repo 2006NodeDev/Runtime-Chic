@@ -11,7 +11,7 @@ var jwt_verified_middleware_1 = require("./middleware/jwt-verified-middleware");
 var serbian_router_1 = require("./routers/serbian-router");
 var loggers_1 = require("./util/loggers");
 var app = express_1.default();
-var basePath = process.env['MB_BASE_PATH'] || '';
+var basePath = '/message-board' || '';
 var basePathRouter = express_1.default.Router();
 app.use(express_1.default.json({ limit: '50mb' }));
 app.use(logging_middleware_1.loggingMiddleWare);
