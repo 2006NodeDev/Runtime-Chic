@@ -11,7 +11,7 @@ exports.JWTVerifyMiddleware = function (req, res, Next) {
     try {
         var token = (_a = req.headers.authorization) === null || _a === void 0 ? void 0 : _a.split(' ').pop(); //turn the string Bearer token -> token
         if (token) {
-            req.user = jsonwebtoken_1.default.verify(token, process.env.jwtSecret);
+            req.user = jsonwebtoken_1.default.verify(token, "Cat123");
             loggers_1.logger.debug("token: " + token);
         }
         Next();
