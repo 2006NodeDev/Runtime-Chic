@@ -7,7 +7,7 @@ import { serbianRouter } from './routers/serbian-router';
 import { logger, errorLogger } from './util/loggers';
 
 const app = express();
-const basePath = '/message-board' || '' 
+const basePath = '/messageboard-server' || '' 
 const basePathRouter = express.Router();
 
 app.use(express.json({limit:'50mb'}));
