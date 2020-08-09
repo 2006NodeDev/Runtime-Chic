@@ -5,9 +5,10 @@ import { useDispatch } from "react-redux";
 import { Message } from "../models/Messages";
 import { postMessageActionMapper } from "../action-mappers/postMessage-action-mapper";
 
-const PostMessage = (props) => {
+const PostMessage = ({ currentUser }) => {
   let [message, changeMessage] = useState("");
   let [title, changeTitle] = useState("");
+  let [messageUser, setMessageUser] = useState(currentUser);
 
   const updateMessage = (e) => {
     e.preventDefault();
@@ -23,12 +24,13 @@ const PostMessage = (props) => {
 
   const submitMessage = async () => {
     let newMessage = new Message();
-    newMessage.userId = 2;
+    newMessage.userId = currentUser.user_id;
     newMessage.message = message;
     newMessage.title = title;
     try {
       let thunk = await postMessageActionMapper(newMessage);
       dispatch(thunk);
+      console.log(messageUser);
       console.log("posting...");
     } catch (e) {
       console.log(`Error from PostMessage ${e}`);

@@ -18,6 +18,7 @@ import FileUpload from "./components/FileUpload";
 import UpdateForm from "./components/UpdateForm";
 import MessageBoard from "./components/MessageBoard";
 import PostMessageBoard from "./components/PostMessageBoard";
+import SerbianMessageBoard from "./components/SerbianMessageBoard";
 
 toast.configure();
 
@@ -48,7 +49,7 @@ function App() {
       setAuth(true);
       toast.success("Logged in Successfully");
       localStorage.setItem("token", response.token.jwtToken);
-      sessionStorage.setItem("CurrentUser", currentUser.lastName);
+      sessionStorage.setItem("user", JSON.stringify(response.user));
     } else {
       setAuth(false);
       toast.error("Invalid Credentials");
@@ -196,6 +197,11 @@ function App() {
               exact
               path="/messageboard/post"
               component={PostMessageBoard}
+            />
+            <Route
+              exact
+              path="/messageboard/translate"
+              component={SerbianMessageBoard}
             />
           </Switch>
         </Router>
