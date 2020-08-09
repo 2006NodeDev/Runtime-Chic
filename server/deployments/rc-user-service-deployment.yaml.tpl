@@ -25,7 +25,7 @@ spec:
           env: 
             - 
               name: RC_HOST
-              value: "34.86.141.95"
+              value: "10.7.80.5"
             - 
               name: RC_DATABASE
               value: postgres
@@ -40,11 +40,11 @@ spec:
               value: "http://rc-user-service-service:3003/user-service"
             - 
               name: jwtSecret
-              value: Cat123
+              value: "Cat123"
             - 
               name: RC_PASSWORD
               value: NodeDev2006
-          image: "gcr.io/tenacious-text-279818/rc-user-service:COMMIT_SHA"
+          image: "gcr.io/message-board-284300/rc-user-service:COMMIT_SHA"
           imagePullPolicy: Always
           livenessProbe: 
             httpGet: 

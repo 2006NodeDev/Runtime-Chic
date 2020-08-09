@@ -7,7 +7,7 @@ export const JWTVerifyMiddleware = (req: any, res: Response, Next: NextFunction)
     try {
         let token = req.headers.authorization?.split(' ').pop()//turn the string Bearer token -> token
         if(token){
-            req.user = jwt.verify(token, "Cat123");
+            req.user = jwt.verify(token, process.env['jwtSecret']);
             logger.debug(`token: ${token}`);
         }
         Next()

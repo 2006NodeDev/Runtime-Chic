@@ -11,10 +11,10 @@ Lauren, Taylor, Tanja, Jaboa
 5. - [X] 1+ foreign key btwn the services databases
 6. - [X] Asychronous messaging btwn services (Pub/Sub)
 7. - [X] Other Google API (translator)
-8. - [ ] Both services deployed in K8s behind ingress
-9. - [ ]  Fronend in bucket or K8s
+8. - [X] Both services deployed in K8s behind ingress
+9. - [X]  Fronend in bucket or K8s
 10. - [X]  Cloud SQL database
-11. - [ ] Logs to Cloud Logging  
-12. - [ ] Logs backed-up in Cloud Storage
-13. - [ ] 1+ checkup in Cloud Monitoring
+11. - [X] Logs to Cloud Logging  
+12. - [X] Logs backed-up in Cloud Storage
+13. - [X] 1+ checkup in Cloud Monitoring
 14. - [ ] Istio (optional)
