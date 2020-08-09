@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-      "types": ["node", "jest"],
+      "types": ["node"],
       "outDir": "build/dist",
       "module": "commonjs",
       "target": "es5",
@@ -26,7 +26,6 @@
       "docs",
       "acceptance-tests",
       "webpack",
-      "jest",
       "src/**/*.test.ts"
     ]
   }

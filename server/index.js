@@ -8,7 +8,11 @@ const app = express();
 const uploadImage = require("./service/helpers/helper");
 const pool = require("./db");
 
+const basePathRouter = express();
+const basePath = '/user-service' || '';
+
 app.use(cors());
+app.use(basePath, basePathRouter);
 
 const multerMid = multer({
   storage: multer.memoryStorage(),
@@ -17,15 +21,15 @@ const multerMid = multer({
   },
 });
 
-app.disable("x-powered-by");
+basePathRouter.disable("x-powered-by");
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(multerMid.single("file"));
-app.use("/api/users", userRouter);
-app.use("/dashboard", dashRouter);
+basePathRouter.use(bodyParser.json());
+basePathRouter.use(bodyParser.urlencoded({ extended: false }));
+basePathRouter.use(multerMid.single("file"));
+basePathRouter.use("/api/users", userRouter);
+basePathRouter.use("/dashboard", dashRouter);
 
-app.post("/uploads/:id", async (req, res, next) => {
+basePathRouter.post("/uploads/:id", async (req, res, next) => {
   try {
     let userId = parseInt(req.params.id);
     console.log(userId);

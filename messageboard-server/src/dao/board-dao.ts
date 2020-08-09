@@ -4,15 +4,12 @@ import { MessageDTOtoMessageConverter } from "../util/MessageDTO-to-Message-conv
 import { Message } from "../models/message";
 import { logger } from "../util/loggers";
 
-//const schema = process.env['LB_SCHEMA'] || 'harrypotter'
-const schema = "messageboard" || "harrypotter";
-
 export async function getMessages(): Promise<Message[]> {
   let client: PoolClient;
   try {
     client = await connectionPool.connect();
     let results: QueryResult = await client.query(`select m.message_id, m.user_id, m.title, m.message, m."date"
-                                                        from ${schema}.messages m
+                                                        from messageboard.messages m
                                                         order by m.message_id;`);
     logger.debug(`getMessages number of messages ${results.rows.length}`);
 
@@ -40,7 +37,7 @@ export async function getOneMessage(messageId: any): Promise<Message> {
     client = await connectionPool.connect();
     let result: QueryResult = await client.query(
       `select m.message_id, m.user_id, m.title, m.message, m."date"
-                                                        from ${schema}.messages m
+                                                        from messageboard.messages m
                                                         where m.message_id = $1
                                                         order by m.message_id`,
       [messageId]
@@ -72,7 +69,7 @@ export async function postMessage(newMessage: Message): Promise<Message> {
     client = await connectionPool.connect();
     logger.debug(`posting message title: ${newMessage.title}`);
     let result = await client.query(
-      `insert into ${schema}.messages("user_id", "title", "message")
+      `insert into messageboard.messages("user_id", "title", "message")
                             values ($1, $2, $3)
                             returning message_id`,
       [newMessage.userId, newMessage.title, newMessage.message]
@@ -93,7 +90,7 @@ export async function getSerbianMessages(): Promise<Message[]> {
   try {
     client = await connectionPool.connect();
     let results: QueryResult = await client.query(`select m.message_id, m.user_id, m.title, m.message, m."date"
-                                                        from ${schema}.foreign_messages m
+                                                        from messageboard.foreign_messages m
                                                         order by m.message_id;`);
     if (results.rowCount === 0) {
       throw new Error("No Messages");

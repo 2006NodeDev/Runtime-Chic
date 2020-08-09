@@ -40,8 +40,6 @@ exports.postSerbianMessage = exports.getSerbianMessages = exports.postMessage = 
 var _1 = require(".");
 var MessageDTO_to_Message_converter_1 = require("../util/MessageDTO-to-Message-converter");
 var loggers_1 = require("../util/loggers");
-//const schema = process.env['LB_SCHEMA'] || 'harrypotter'
-var schema = 'messageboard' || 'harrypotter';
 function getMessages() {
     return __awaiter(this, void 0, void 0, function () {
         var client, results, error_1;
@@ -52,7 +50,7 @@ function getMessages() {
                     return [4 /*yield*/, _1.connectionPool.connect()];
                 case 1:
                     client = _a.sent();
-                    return [4 /*yield*/, client.query("select m.message_id, m.user_id, m.title, m.message, m.\"date\"\n                                                        from " + schema + ".messages m\n                                                        order by m.message_id;")];
+                    return [4 /*yield*/, client.query("select m.message_id, m.user_id, m.title, m.message, m.\"date\"\n                                                        from messageboard.messages m\n                                                        order by m.message_id;")];
                 case 2:
                     results = _a.sent();
                     loggers_1.logger.debug("getMessages number of messages " + results.rows.length);
@@ -67,8 +65,8 @@ function getMessages() {
                         throw new Error(error_1.message);
                     }
                     else {
-                        loggers_1.logger.error('unknown error getMessages');
-                        throw new Error('Unknown getMessages Error');
+                        loggers_1.logger.error("unknown error getMessages");
+                        throw new Error("Unknown getMessages Error");
                     }
                     return [3 /*break*/, 5];
                 case 4:
@@ -93,7 +91,7 @@ function getOneMessage(messageId) {
                     return [4 /*yield*/, _1.connectionPool.connect()];
                 case 2:
                     client = _a.sent();
-                    return [4 /*yield*/, client.query("select m.message_id, m.user_id, m.title, m.message, m.\"date\"\n                                                        from " + schema + ".messages m\n                                                        where m.message_id = $1\n                                                        order by m.message_id", [messageId])];
+                    return [4 /*yield*/, client.query("select m.message_id, m.user_id, m.title, m.message, m.\"date\"\n                                                        from messageboard.messages m\n                                                        where m.message_id = $1\n                                                        order by m.message_id", [messageId])];
                 case 3:
                     result = _a.sent();
                     if (result.rowCount === 0) {
@@ -109,8 +107,8 @@ function getOneMessage(messageId) {
                         throw new Error(error_2.message);
                     }
                     else {
-                        loggers_1.logger.error('unknown error getOneMessage');
-                        throw new Error('Unknown getOneMessage Error');
+                        loggers_1.logger.error("unknown error getOneMessage");
+                        throw new Error("Unknown getOneMessage Error");
                     }
                     return [3 /*break*/, 6];
                 case 5:
@@ -133,7 +131,7 @@ function postMessage(newMessage) {
                 case 1:
                     client = _a.sent();
                     loggers_1.logger.debug("posting message title: " + newMessage.title);
-                    return [4 /*yield*/, client.query("insert into " + schema + ".messages(\"user_id\", \"title\", \"message\")\n                            values ($1, $2, $3)\n                            returning message_id", [newMessage.userId, newMessage.title, newMessage.message])];
+                    return [4 /*yield*/, client.query("insert into messageboard.messages(\"user_id\", \"title\", \"message\")\n                            values ($1, $2, $3)\n                            returning message_id", [newMessage.userId, newMessage.title, newMessage.message])];
                 case 2:
                     result = _a.sent();
                     messageId = result.rows[0].message_id;
@@ -141,8 +139,8 @@ function postMessage(newMessage) {
                     return [2 /*return*/, getOneMessage(messageId)];
                 case 3:
                     error_3 = _a.sent();
-                    loggers_1.logger.error('Unknown Error postMessage');
-                    throw new Error('Unknown postMessages Error');
+                    loggers_1.logger.error("Unknown Error postMessage");
+                    throw new Error("Unknown postMessages Error");
                 case 4:
                     client === null || client === void 0 ? void 0 : client.release();
                     return [7 /*endfinally*/];
@@ -162,7 +160,7 @@ function getSerbianMessages() {
                     return [4 /*yield*/, _1.connectionPool.connect()];
                 case 1:
                     client = _a.sent();
-                    return [4 /*yield*/, client.query("select m.message_id, m.user_id, m.title, m.message, m.\"date\"\n                                                        from " + schema + ".foreign_messages m\n                                                        order by m.message_id;")];
+                    return [4 /*yield*/, client.query("select m.message_id, m.user_id, m.title, m.message, m.\"date\"\n                                                        from messageboard.foreign_messages m\n                                                        order by m.message_id;")];
                 case 2:
                     results = _a.sent();
                     if (results.rowCount === 0) {
@@ -176,8 +174,8 @@ function getSerbianMessages() {
                         throw new Error(error_4.message);
                     }
                     else {
-                        loggers_1.logger.error('unknown error getSerbianMessages');
-                        throw new Error('Unknown getSerbianMessages Error');
+                        loggers_1.logger.error("unknown error getSerbianMessages");
+                        throw new Error("Unknown getSerbianMessages Error");
                     }
                     return [3 /*break*/, 5];
                 case 4:
@@ -210,8 +208,8 @@ function postSerbianMessage(newMessage) {
                     return [2 /*return*/, newMessage];
                 case 4:
                     error_5 = _a.sent();
-                    loggers_1.logger.error('Unknown Error postSerbianMessage');
-                    throw new Error('Unknown postSerbianMessages Error');
+                    loggers_1.logger.error("Unknown Error postSerbianMessage");
+                    throw new Error("Unknown postSerbianMessages Error");
                 case 5:
                     client === null || client === void 0 ? void 0 : client.release();
                     return [7 /*endfinally*/];
