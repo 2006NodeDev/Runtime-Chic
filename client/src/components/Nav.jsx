@@ -1,16 +1,43 @@
-import React from "react";
+import React, { useState } from "react";
 import { useHistory, Link } from "react-router-dom";
 import FileUpload from "./FileUpload";
 import Notifications from "./Notifications";
 import noUserProfile from "../images/userimg.png";
 
 const Nav = ({ currentUser }) => {
+  const [data, setData] = useState([]);
+
   const history = useHistory();
   console.log(currentUser);
+
+  const getNewMessage = async () => {
+    await fetch("http://localhost:3003/dashboard/notifications")
+      .then((res) => res.json())
+      .then((response) => setData(response[0]));
+  };
+  console.log(data);
+  let newMessage = data[data.length - 1];
+  const notes = (
+    <ul>
+      <li>
+        <h2>New Message</h2>
+      </li>
+      {/* {data.map((note) => (
+        <li>
+          <h4>NEW MESSAGE</h4>
+          <p>{note.title}</p>
+          <p>{note.message}</p>
+        </li>
+      ))} */}
+    </ul>
+  );
 
   const routeChange = () => {
     let path = `/userprofile`;
     history.push(path);
+  };
+  const notificationClick = () => {
+    getNewMessage();
   };
 
   return (
@@ -19,13 +46,11 @@ const Nav = ({ currentUser }) => {
         <div id="hiddenMenu" class="p-4">
           <Link to="/">login</Link>
           <br />
-          <Link to="/userprofile/update">profile picture</Link>
+          <Link to="/userprofile/update">Update User</Link>
           <br />
-          <Link to="/messageboard">Message Board</Link>
-          <br />
+
           <Link to="/messageboard/translate">Translated Message Board</Link>
           <br />
-          <Link to="/messageboard/post">Post Message</Link>
         </div>
       </div>
       <nav class="navbar navbar-dark bg-dark">
@@ -52,8 +77,12 @@ const Nav = ({ currentUser }) => {
           >
             <i style={{ fontSize: "30px" }} class="fas fa-bell"></i>
           </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            {/* <Notifications /> */}
+          <div
+            onclick={notificationClick}
+            class="dropdown-menu"
+            aria-labelledby="navbarDropdownMenuLink"
+          >
+            {notes}
           </div>
           <button
             className="btn"

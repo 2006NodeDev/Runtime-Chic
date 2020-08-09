@@ -25,6 +25,7 @@ const Register = ({ getRegisteredUser }) => {
       inputs.firstName,
       inputs.lastName
     );
+
     // try {
     //   const body = { userEmail, userPassword, firstName, lastName };
     //   const response = await fetch("http://localhost:3003/api/users/register", {

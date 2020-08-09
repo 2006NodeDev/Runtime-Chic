@@ -40,16 +40,14 @@ export interface IPostMessageState {
   errorMessage: string;
 }
 
-
-export interface IState{
-    allMessageState:IAllMessagesState,
-    allSerbianMessageState:IAllSerbianMessagesState,
-    postMessageState:IPostMessageState,
+export interface IState {
+  allMessageState: IAllMessagesState;
+  allSerbianMessageState: IAllSerbianMessagesState;
+  postMessageState: IPostMessageState;
 }
 
 export const state = combineReducers<IState>({
-    allMessageState:allMessagesReducer,
-    allSerbianMessageState:allSerbianMessagesReducer,
-    postMessageState:postMessageReducer,
-})
-
+  allMessageState: allMessagesReducer,
+  allSerbianMessageState: allSerbianMessagesReducer,
+  postMessageState: postMessageReducer,
+});

@@ -11,11 +11,12 @@ import MessageBoard from "./MessageBoard";
 import PostMessage from "./PostMessageBoard";
 
 const Dashboard = ({ setAuth, currentUser }) => {
-  //  const [name, setName] = useState("");
-  //  const [houseImg, sethouseImg] = useState([]);
-  //  const [profileImg, setProfileImg] = useState("");
+  // const [name, setName] = useState("");
+  // const [houseImg, sethouseImg] = useState([]);
+  // const [profileImg, setProfileImg] = useState("");
   //  const [members, setMembers] = useState([]);
   console.log(currentUser);
+
   // const getProfile = async () => {
   //   try {
   //     const res = await fetch("http:/localhost:3003/dashboard", {
@@ -86,7 +87,7 @@ const Dashboard = ({ setAuth, currentUser }) => {
           </h1>
           <h1>{currentUser.first_name}</h1>
         </div> */}
-          <PostMessage />
+          <PostMessage currentUser={currentUser} />
         </div>
 
         <button

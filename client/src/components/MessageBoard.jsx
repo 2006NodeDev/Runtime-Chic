@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import featherPen from "../images/featherpen.png";
 import { Message } from "../models/Messages";
 import { User } from "../models/Users";
 import { MessageDisplay } from "../components/MessageDisplay";
@@ -14,6 +14,7 @@ const style = makeStyles((theme) => ({
     alignSelf: "center",
     alignItems: "center",
     fontFamily: "Lemonada",
+    marginLeft: "60px",
   },
   body: {
     alignSelf: "center",
@@ -33,6 +34,9 @@ const style = makeStyles((theme) => ({
     justifyContent: "center",
     marginTop: "90px",
     marginLeft: "90px",
+  },
+  childDiv: {
+    maxHeight: "600px",
     overflow: "scroll",
   },
 }));
@@ -94,9 +98,18 @@ const MessageBoard = (props) => {
 
   return (
     <div className={classes.alignItemsAndJustifyContent}>
-      <h1 className={classes.header}> Message Board </h1> <br />
-      <div className={classes.body}>{messageDisplays}</div>
-      <br />
+      <div className={classes.childDiv}>
+        <span style={{ display: "flex", flexDirection: "row" }}>
+          <h1 className={classes.header}> Message Board </h1>
+          <img
+            style={{ height: "120px", width: "80px" }}
+            src={featherPen}
+            alt=""
+          />
+        </span>
+        <div className={classes.body}>{messageDisplays}</div>
+        <br />
+      </div>
     </div>
   );
 };

@@ -24,6 +24,7 @@ const Login = ({ getUser }) => {
     getUser(inputs.userEmail, inputs.userPassword);
     console.log(inputs);
   };
+  // window.onload = onSubmit;
 
   return (
     <div id="MainDiv">

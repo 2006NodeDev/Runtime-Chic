@@ -90,7 +90,7 @@ export const MessageDisplay = (props) => {
           title={`${props.user.userEmail}`}
           subheader={`${props.message.date}`}
         />
-        <Typography className={character.subject}>Subject:</Typography>
+        {/* <Typography className={character.subject}>Subject:</Typography>
         <Typography
           className={character.title}
           variant="body1"
@@ -102,17 +102,27 @@ export const MessageDisplay = (props) => {
         </Typography>
         <Typography className={character.message} paragraph>
           {props.message.message}
-        </Typography>
-        <Typography className={character.message} paragraph>
-          {props.message.message}
-        </Typography>
-        {/* <CardContent className={classes.subject}>
+        </Typography> */}
+
+        <CardContent className={classes.subject}>
           <Typography className={character.subject}>Subject:</Typography>
-          <Typography className={character.title} variant="body1" color="textSecondary" component="p">
+          <Typography
+            className={character.title}
+            variant="body1"
+            color="textSecondary"
+            component="p"
+          >
             {props.message.title}
           </Typography>
+          <Typography
+            style={{ paddingTop: "20px", paddingLeft: "20px" }}
+            className={character.message}
+            paragraph
+          >
+            {props.message.message}
+          </Typography>
         </CardContent>
-        <CardActions disableSpacing>
+        {/* <CardActions disableSpacing>
           <IconButton
             className={clsx(classes.expand, {
               [classes.expandOpen]: expanded,
@@ -126,8 +136,10 @@ export const MessageDisplay = (props) => {
         </CardActions>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
-            {/* <Typography className={classes.title} paragraph>{props.message.title}</Typography> */}
-        {/* <Typography className={character.message} paragraph>
+            <Typography className={classes.title} paragraph>
+              {props.message.title}
+            </Typography>
+            <Typography className={character.message} paragraph>
               {props.message.message}
             </Typography>
           </CardContent>
