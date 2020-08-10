@@ -9,9 +9,9 @@ spec:
       paths:
       - path: /user-service/*
         backend:
-          serviceName: server
+          serviceName: rc-user-service-service
           servicePort: 3003
       - path: /messageboard-service/*
         backend:
-          serviceName: messageboard-server
+          serviceName: rc-messageboard-service-service
           servicePort: 2007

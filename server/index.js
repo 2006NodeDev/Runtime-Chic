@@ -53,4 +53,8 @@ basePathRouter.post("/uploads/:id", async (req, res, next) => {
   }
 });
 
+app.get('/health', (req, res) => {
+  res.sendStatus(200);
+});
+
 app.listen("3003", () => console.log("listening on port 3003"));

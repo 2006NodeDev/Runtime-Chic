@@ -25,7 +25,7 @@ spec:
           env: 
             - 
               name: MB_HOST
-              value: "34.86.141.95"
+              value: "10.7.80.5"
             - 
               name: MB_DATABASE
               value: message-board
