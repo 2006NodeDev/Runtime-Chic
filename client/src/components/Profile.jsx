@@ -12,41 +12,55 @@ export const Profile = ({ setAuth }) => {
   let currentUser = sessionStorage.getItem("user");
   currentUser = JSON.parse(currentUser);
   return (
-    <div className="profileMainDiv">
-      <div>
-        <Paper id="userProfileDiv">
-          <div id="userInfoProfile">
-            <img
-              key={currentUser.user_id}
-              id="userProfileImg"
-              src={currentUser.profile}
-              alt=""
-            />
+    <>
+      {!currentUser ? (
+        <div></div>
+      ) : (
+        <div className="profileMainDiv">
+          <div>
+            <Paper id="userProfileDiv">
+              <div id="userInfoProfile">
+                <img
+                  key={currentUser.user_id}
+                  id="userProfileImg"
+                  src={currentUser.profile}
+                  alt=""
+                />
 
-            <h3>
-              {currentUser.first_name}
-              {currentUser.last_name}
-            </h3>
-            <br />
-            <h3>{currentUser.house_name}</h3>
+                <h3>
+                  {currentUser.first_name}
+                  {currentUser.last_name}
+                </h3>
+                <br />
+                <h3>{currentUser.house_name}</h3>
+              </div>
+              <div id="houseImgDiv">
+                {(() => {
+                  switch (currentUser.house_name) {
+                    case "Gryffindor":
+                      return (
+                        <img className="houseImage" src={gryffindor} alt="" />
+                      );
+                    case "Slytherin":
+                      return (
+                        <img className="houseImage" src={slytherin} alt="" />
+                      );
+                    case "Ravenclaw":
+                      return (
+                        <img className="houseImage" src={ravenclaw} alt="" />
+                      );
+                    case "Hufflepuff":
+                      return (
+                        <img className="houseImage" src={hufflepuff} alt="" />
+                      );
+                  }
+                })()}
+              </div>
+            </Paper>
           </div>
-          <div id="houseImgDiv">
-            {(() => {
-              switch (currentUser.house_name) {
-                case "Gryffindor":
-                  return <img className="houseImage" src={gryffindor} alt="" />;
-                case "Slytherin":
-                  return <img className="houseImage" src={slytherin} alt="" />;
-                case "Ravenclaw":
-                  return <img className="houseImage" src={ravenclaw} alt="" />;
-                case "Hufflepuff":
-                  return <img className="houseImage" src={hufflepuff} alt="" />;
-              }
-            })()}
-          </div>
-        </Paper>
-      </div>
-    </div>
+        </div>
+      )}
+    </>
   );
 };
 export default Profile;

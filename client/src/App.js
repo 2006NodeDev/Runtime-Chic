@@ -44,7 +44,7 @@ function App() {
       .then((response) => response.json())
       .then((jsondata) => jsondata);
 
-    // setCurrentUser(response.user);
+    //setCurrentUser(response.user);
     sessionStorage.setItem("user", JSON.stringify(response.user));
     console.log(currentUser);
     if (response.token) {
