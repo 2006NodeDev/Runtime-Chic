@@ -1,11 +1,10 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useState, useEffect, useContext } from "react";
 import {
   BrowserRouter as Router,
   Route,
   Switch,
   Redirect,
 } from "react-router-dom";
-
 import { Provider } from "react-redux";
 import Nav from "./components/Nav";
 import "./App.css";
@@ -23,7 +22,7 @@ import SerbianMessageBoard from "./components/SerbianMessageBoard";
 toast.configure();
 
 function App() {
-  const [currentUser, setCurrentUser] = useState([]);
+  const { currentUser, setCurrentUser } = useState([]);
   const [getToken, setToken] = useState("");
 
   const getUser = async (userEmail, userPassword) => {
@@ -31,19 +30,22 @@ function App() {
       userEmail,
       userPassword,
     };
-    const response = await fetch("http://localhost:3003/api/users/login", {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      Accept: "application/json",
-      body: JSON.stringify(credentials),
-    })
+    const response = await fetch(
+      "http://34.120.86.250:80/user-service/api/users/login",
+      {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        Accept: "application/json",
+        body: JSON.stringify(credentials),
+      }
+    )
       .then((response) => response.json())
       .then((jsondata) => jsondata);
 
-    setCurrentUser(response.user);
-
+    // setCurrentUser(response.user);
+    sessionStorage.setItem("user", JSON.stringify(response.user));
     console.log(currentUser);
     if (response.token) {
       setAuth(true);
@@ -65,24 +67,26 @@ function App() {
     lastName
   ) => {
     const body = { userEmail, userPassword, firstName, lastName };
-    const response = await fetch("http://localhost:3003/api/users/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(body),
-    })
+    const response = await fetch(
+      "http://34.120.86.250:80/user-service/api/users/register",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      }
+    )
       .then((response) => response.json())
       .then((jsondata) => jsondata);
 
-    setCurrentUser(response.user);
+    // setCurrentUser(response.user);
     console.log(currentUser);
     if (response.token) {
       setAuth(true);
       toast.success("Logged in Successfully");
       localStorage.setItem("token", response.token.jwtToken);
-      const userStorage = sessionStorage.setItem("CurrentUser", currentUser);
-      console.log(userStorage);
+      sessionStorage.setItem("user", JSON.stringify(response.user));
     } else {
       setAuth(false);
       toast.error("error");
@@ -92,10 +96,13 @@ function App() {
   const checkAuthenticated = async () => {
     const token = localStorage.getItem("token");
     try {
-      const res = await fetch("http://localhost:3003/api/users/verify", {
-        method: "GET",
-        headers: { jwt_token: token },
-      });
+      const res = await fetch(
+        "http://34.120.86.250:80/user-service/api/users/verify",
+        {
+          method: "GET",
+          headers: { jwt_token: token },
+        }
+      );
 
       const parseRes = await res.json();
       console.log(`this is in App: ${parseRes}`);

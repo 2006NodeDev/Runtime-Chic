@@ -39,7 +39,8 @@ const SerbianMessageBoard = (props) => {
     return state.allSerbianMessageState.messageList;
   });
 
-  let url = process.env["USER_SERVICE_HOST"] || "http://localhost:3003";
+  let url =
+    process.env["USER_SERVICE_HOST"] || "http://34.120.86.250:80/user-service";
 
   const getAllUsers = async () => {
     try {

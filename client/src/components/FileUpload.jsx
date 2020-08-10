@@ -2,7 +2,10 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import Nav from "./Nav";
 
-const FileUpload = ({ currentUser }) => {
+const FileUpload = () => {
+  let currentUser = sessionStorage.getItem("user");
+  currentUser = JSON.parse(currentUser);
+
   const history = useHistory();
 
   const [file, setFile] = useState({
@@ -24,14 +27,17 @@ const FileUpload = ({ currentUser }) => {
     try {
       const formData = new FormData();
       formData.append("file", file.img);
-      await fetch(`http://localhost:3003/uploads/${currentUser.user_id}`, {
-        // headers: {
-        //   Accept: "application/json",
-        //   "Content-Type": "multipart/form-data",
-        // },
-        method: "POST",
-        body: formData,
-      })
+      await fetch(
+        `http://34.120.86.250:80/user-service/uploads/${currentUser.user_id}`,
+        {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "multipart/form-data",
+          },
+          method: "POST",
+          body: formData,
+        }
+      )
         .then((response) => response.json())
         .then((data) => console.log(data));
       history.push("/dashboard");

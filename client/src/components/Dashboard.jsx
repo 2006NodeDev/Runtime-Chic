@@ -53,6 +53,7 @@ const Dashboard = ({ setAuth, currentUser }) => {
   const logout = async (e) => {
     try {
       localStorage.removeItem("token");
+      localStorage.removeItem("user");
       setAuth(false);
       toast.success("Logout successfully");
     } catch (err) {

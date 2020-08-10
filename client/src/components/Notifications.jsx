@@ -4,7 +4,7 @@ const Notifications = () => {
   const [data, setData] = useState([]);
 
   const getNewMessage = async () => {
-    await fetch("http://localhost:3003/dashboard/notifications")
+    await fetch("http://34.120.86.250:80/user-service/dashboard/notifications")
       .then((res) => res.json())
       .then((response) => setData(response[0]));
   };
