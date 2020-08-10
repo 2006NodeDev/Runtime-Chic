@@ -10,7 +10,9 @@ import Nav from "./Nav";
 import MessageBoard from "./MessageBoard";
 import PostMessage from "./PostMessageBoard";
 
-const Dashboard = ({ setAuth, currentUser }) => {
+const Dashboard = ({ setAuth }) => {
+  let currentUser = sessionStorage.getItem("user");
+  currentUser = JSON.parse(currentUser);
   // const [name, setName] = useState("");
   // const [houseImg, sethouseImg] = useState([]);
   // const [profileImg, setProfileImg] = useState("");
@@ -53,7 +55,7 @@ const Dashboard = ({ setAuth, currentUser }) => {
   const logout = async (e) => {
     try {
       localStorage.removeItem("token");
-      localStorage.removeItem("user");
+      sessionStorage.removeItem("user");
       setAuth(false);
       toast.success("Logout successfully");
     } catch (err) {
