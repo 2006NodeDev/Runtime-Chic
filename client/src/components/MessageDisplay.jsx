@@ -121,6 +121,7 @@ export const MessageDisplay = (props) => {
           >
             {props.message.message}
           </Typography>
+          <br />
         </CardContent>
         {/* <CardActions disableSpacing>
           <IconButton

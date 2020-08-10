@@ -5,9 +5,11 @@ import { useDispatch } from "react-redux";
 import { Message } from "../models/Messages";
 import { postMessageActionMapper } from "../action-mappers/postMessage-action-mapper";
 
-const PostMessage = ({ currentUser }) => {
+const PostMessage = () => {
   let [message, changeMessage] = useState("");
   let [title, changeTitle] = useState("");
+  let currentUser = sessionStorage.getItem("user");
+  currentUser = JSON.parse(currentUser);
   let [messageUser, setMessageUser] = useState(currentUser);
 
   const updateMessage = (e) => {

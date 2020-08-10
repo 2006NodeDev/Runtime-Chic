@@ -16,6 +16,7 @@ export const gryffindorStyle = makeStyles((theme) => ({
     fontFamily: "lemonada",
     border: "solid black 2px",
     boxShadow: "inset 0px 5px 25px 5px black, 5px 5px 12px 2px #dba800",
+    marginBottom: "10px",
   },
   avatar: {
     backgroundColor: "#d3a625",
@@ -26,10 +27,11 @@ export const gryffindorStyle = makeStyles((theme) => ({
   },
   root: {
     maxWidth: 500,
-    height: 250,
+    height: 270,
     backgroundColor: "#740001",
     color: "#eeba30",
     border: "solid black 2px",
+    marginBottom: "10px",
   },
 }));
 

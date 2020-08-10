@@ -57,11 +57,11 @@ const MessageBoard = (props) => {
     }
   };
 
-  let url = process.env["USER_SERVICE_HOST"] || "http://localhost:3003";
+  //   let url = process.env["USER_SERVICE_HOST"] || "http://localhost:3003";
 
   const getAllUsers = async () => {
     try {
-      fetch(`${url}/api/users/get/allUsers`)
+      fetch(`http://34.120.86.250:80/user-service/api/users/get/allUsers`)
         .then((response) => response.json())
         .then((data) => {
           setAllUsers(data);

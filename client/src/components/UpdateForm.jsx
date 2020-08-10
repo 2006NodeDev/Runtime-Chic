@@ -27,7 +27,7 @@ const UpdateForm = ({ setAuth, currentUser }) => {
     try {
       const body = { userEmail, userPassword, firstName, lastName };
       const response = await fetch(
-        `http://localhost:3003/dashboard/update/${currentUser.user_id}`,
+        `http://34.120.86.250:80/user-service/dashboard/update/${currentUser.user_id}`,
         {
           method: "PATCH",
           headers: {

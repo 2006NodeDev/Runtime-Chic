@@ -7,7 +7,10 @@ import slytherin from "../images/slytherin.png";
 import ravenclaw from "../images/ravenclaw.png";
 import hufflepuff from "../images/hufflepuff.png";
 
-export const Profile = ({ setAuth, currentUser }) => {
+export const Profile = ({ setAuth }) => {
+  //const { currentUser } = useContext(AppContext);
+  let currentUser = sessionStorage.getItem("user");
+  currentUser = JSON.parse(currentUser);
   return (
     <div className="profileMainDiv">
       <div>
